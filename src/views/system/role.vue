@@ -8,7 +8,7 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="mini" icon="PlusIcon" @click="onAddItem"
+            <el-button type="primary" size="small" icon="PlusIcon" @click="onAddItem"
               >添加
             </el-button>
           </template>
@@ -38,7 +38,7 @@
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 plain
                 type="primary"
-                size="mini"
+                size="small"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
@@ -46,11 +46,11 @@
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 plain
                 type="danger"
-                size="mini"
+                size="small"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
-              <el-button plain type="warning" size="mini" @click="showMenu(scope.row)"
+              <el-button plain type="warning" size="small" @click="showMenu(scope.row)"
                 >菜单权限</el-button
               >
             </template>

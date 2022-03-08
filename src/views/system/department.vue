@@ -8,7 +8,7 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="mini" icon="PlusIcon" @click="onAddItem"
+            <el-button type="primary" size="small" icon="PlusIcon" @click="onAddItem"
               >添加
             </el-button>
           </template>
@@ -38,10 +38,10 @@
             align="center"
           >
             <template v-if="item.prop === 'actions'" #default="scope">
-              <el-button plain type="primary" size="mini" @click="onUpdateItem(scope.row)"
+              <el-button plain type="primary" size="small" @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
-              <el-button plain type="danger" size="mini" @click="onDeleteItem(scope.row)"
+              <el-button plain type="danger" size="small" @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
             </template>

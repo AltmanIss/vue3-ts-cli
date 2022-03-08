@@ -1,12 +1,13 @@
 <template>
-  <el-scrollbar class="scrollbar" wrap-class="scrollbar-wrap-class">
+  <el-scrollbar :class="mMode === 'vertical' ? 'scrollbar' : ''" wrap-class="scrollbar-wrap-class">
     <el-menu
       :default-active="activePath"
-      mode="vertical"
+      :mode="mMode"
       :collapse="state.isCollapse"
       active-text-color="var(--el-color-primary)"
       :text-color="state.theme === 'light' ? '#303133' : '#bbbbbb'"
       :background-color="bgColor"
+      :style="{ height: mMode === 'vertical' ? '100%' : '48px' }"
     >
       <slot></slot>
     </el-menu>
@@ -30,13 +31,20 @@ export default defineComponent({
     fullPath: {
       type: String,
       default: null
+    },
+    mode: {
+      type: String,
+      default: 'vertical'
     }
   },
-  setup() {
+  setup(props) {
     const state = store.state;
     const route = useRoute();
     const bgColor = ref(state.theme === 'light' ? 'var(--el-color-white)' : '#001428');
     const activePath = ref(route.fullPath);
+    const mMode = computed(() => {
+      return props.mode;
+    });
     watch(
       () => route.fullPath,
       () => {
@@ -52,6 +60,7 @@ export default defineComponent({
       }
     );
     return {
+      mMode,
       activePath,
       state,
       bgColor

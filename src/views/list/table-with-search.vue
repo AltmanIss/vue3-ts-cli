@@ -16,8 +16,8 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="mini" icon="PlusIcon">添加 </el-button>
-            <el-button type="danger" size="mini" icon="DeleteIcon">删除 </el-button>
+            <el-button type="primary" size="small" icon="PlusIcon">添加 </el-button>
+            <el-button type="danger" size="small" icon="DeleteIcon">删除 </el-button>
           </template>
         </TableConfig>
       </template>

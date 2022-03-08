@@ -122,10 +122,10 @@
                 />
               </div>
               <div v-else-if="item.type === 'action'" class="flex justify-end">
-                <el-button type="success" size="mini" :icon="RefreshIcon" @click="doResetSearch"
+                <el-button type="success" size="small" :icon="RefreshIcon" @click="doResetSearch"
                   >重置</el-button
                 >
-                <el-button type="primary" size="mini" :icon="SearchIcon" @click="doSearch"
+                <el-button type="primary" size="small" :icon="SearchIcon" @click="doSearch"
                   >搜索</el-button
                 >
               </div>
