@@ -2,12 +2,9 @@
   <div
     class="vaw-main-layout-container"
     :class="[
-      state.layoutMode === 'ttb'
-        ? 'main-layout__ttb'
-        : !state.isCollapse
-        ? 'main-layout-open-status'
-        : 'main-layout-close-status',
-      state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout'
+      state.layoutMode === 'ttb' ? 'main-layout__ttb' : '',
+      state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
+      state.isCollapse ? 'main-layout-close-status' : 'main-layout-open-status',
     ]"
   >
     <section
@@ -18,11 +15,11 @@
           ? 'nav-bar-open-status'
           : 'nav-bar-close-status',
         state.isFixedNavBar ? 'fixed-nav-bar' : '',
-        !mShowNavBar ? 'tab-bar-top' : ''
+        !mShowNavBar ? 'tab-bar-top' : '',
       ]"
     >
       <NavBar v-if="mShowNavBar" />
-      <TabBar :show-humburger="mShowNavBar" />
+      <!-- <TabBar /> -->
     </section>
     <div class="main-base-style">
       <section class="main-section">
@@ -38,20 +35,15 @@
 </template>
 
 <script lang="ts">
-import NavBar from './navbar/NavBar.vue';
-import TabBar from './tabbar/index.vue';
-import Main from './Main.vue';
 import store from './store';
-import { computed, defineComponent, ref } from 'vue';
-import useEmit from '@/hooks/Emit';
+import { computed, defineComponent } from 'vue';
 export default defineComponent({
   name: 'MainLayout',
-  components: { NavBar, Main, TabBar },
   props: {
     showNavBar: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props) {
     const state = store.state;
@@ -68,14 +60,14 @@ export default defineComponent({
       state,
       mShowNavBar,
       isShowHeader,
-      onFixedHeader
+      onFixedHeader,
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-@import './styles/variables.scss';
+@import "./styles/variables.scss";
 .main-layout__ttb {
   margin-left: 0;
 }
@@ -100,7 +92,8 @@ export default defineComponent({
   overflow-y: auto;
 }
 .main-layout_fixed-nav-bar {
-  padding-top: $logoHeight + $tabHeight;
+  padding-top: $logoHeight;
+  // padding-top: $logoHeight + $tabHeight;
   overflow-y: hidden;
   .main-base-style {
     overflow-y: auto;
@@ -111,6 +104,7 @@ export default defineComponent({
   height: 100%;
   box-sizing: border-box;
   transition: margin-left $transitionTime;
+  position: relative;
   .main-base-style {
     height: 100%;
     box-sizing: border-box;

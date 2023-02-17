@@ -1,6 +1,7 @@
 <template>
   <div class="footer-container">
-    Copyright <i class="iconfont" style="margin: 0 5px">©</i> {{ setting.projectName }} 2022
+    Copyright <i class="iconfont" style="margin: 0 5px">©</i>
+    {{ setting.projectName }} 2023
   </div>
 </template>
 
@@ -11,14 +12,14 @@ export default defineComponent({
   name: 'Footer',
   setup() {
     return {
-      setting: useSetting()
+      setting: useSetting(),
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .footer-container {
   height: $footerHeight;
   display: flex;

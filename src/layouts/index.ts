@@ -20,9 +20,12 @@ function getComponentName(key: string) {
 
 export function registerComponents(app: App) {
   const components = require.context('./', true, /\.vue$/);
-  components.keys().forEach((it) => {
+  components.keys().forEach((it: string) => {
     const component = components(it);
-    app.component(component.default.name || getComponentName(it), component.default);
+    app.component(
+      component.default.name || getComponentName(it),
+      component.default
+    );
   });
 }
 
@@ -44,7 +47,8 @@ function install(Vue: App, options: any) {
     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
   );
   Vue.config.globalProperties.$isAndroid =
-    navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1;
+    navigator.userAgent.indexOf('Android') > -1 ||
+    navigator.userAgent.indexOf('Adr') > -1;
   Vue.provide(key, store);
   Vue.provide(emitKey, new TinyEmitter());
 }
@@ -62,5 +66,5 @@ export default {
   initPermissionRoute: store.initPermissionRoute,
   reset: store.reset,
   isEmptyPermissionRoute: store.isEmptyPermissionRoute,
-  install
+  install,
 };

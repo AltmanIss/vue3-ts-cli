@@ -1,7 +1,10 @@
 <template>
   <div class="item-container">
     <div class="img-wrapper">
-      <img class="img-item" :src="item.imagePath" />
+      <img
+        class="img-item"
+        :src="item.imagePath"
+      />
     </div>
     <div class="info-wrapper">
       {{ item.title }}
@@ -10,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ProjectItem',
@@ -19,9 +22,9 @@ export default defineComponent({
       type: Object,
       default: function () {
         return {};
-      }
-    }
-  }
+      },
+    },
+  },
 });
 </script>
 
@@ -54,7 +57,7 @@ export default defineComponent({
     }
   }
   .img-wrapper::after {
-    content: '';
+    content: "";
     display: block;
     width: 100%;
     height: 100%;

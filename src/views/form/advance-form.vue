@@ -1,15 +1,24 @@
 <template>
   <div class="main-container">
     <div>
-      <el-card :body-style="{ padding: 0 }" shadow="hover">
+      <el-card
+        :body-style="{padding: 0}"
+        shadow="hover"
+      >
         <div class="flex justify-between padding-sm">
           <el-link :underline="false">添加学校</el-link>
-          <el-button size="mini" type="primary">立即添加</el-button>
+          <el-button
+            size="default"
+            type="primary"
+          >立即添加</el-button>
         </div>
       </el-card>
     </div>
     <div class="content-wrapper margin-top">
-      <el-card :body-style="{ padding: 0 }" shadow="hover">
+      <el-card
+        :body-style="{padding: 0}"
+        shadow="hover"
+      >
         <div class="flex justify-between padding-sm solid-bottom">
           <el-link :underline="false">基本信息</el-link>
         </div>
@@ -17,13 +26,16 @@
           v-model="baseInfoModel"
           label-width="80px"
           class="form-wrapper"
-          size="small"
+          size="default"
           label-position="right"
         >
           <el-row>
             <el-col :span="24">
               <el-form-item label="学校名称">
-                <el-input v-model="baseInfoModel.name" placeholder="请输入学校名称" />
+                <el-input
+                  v-model="baseInfoModel.name"
+                  placeholder="请输入学校名称"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -40,7 +52,10 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="加盟方式">
-                <el-radio-group v-model="baseInfoModel.joinType" size="mini">
+                <el-radio-group
+                  v-model="baseInfoModel.joinType"
+                  size="default"
+                >
                   <el-radio-button label="普通" />
                   <el-radio-button label="独家" />
                   <el-radio-button label="代理" />
@@ -51,7 +66,10 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="学校地址">
-                <el-input v-model="baseInfoModel.address" placeholder="请输入学校地址" />
+                <el-input
+                  v-model="baseInfoModel.address"
+                  placeholder="请输入学校地址"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -69,7 +87,10 @@
           </el-row>
         </el-form>
       </el-card>
-      <el-card :body-style="{ padding: 0 }" class="margin-top-xs">
+      <el-card
+        :body-style="{padding: 0}"
+        class="margin-top-xs"
+      >
         <div class="flex justify-between padding-sm solid-bottom">
           <el-link :underline="false">其它信息</el-link>
         </div>
@@ -77,7 +98,7 @@
           v-model="baseInfoModel"
           label-width="80px"
           class="form-wrapper"
-          size="small"
+          size="default"
           label-position="right"
         >
           <el-row>
@@ -101,7 +122,10 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="学生数量">
-                <el-input-number v-model="baseInfoModel.studentNum" size="mini" />
+                <el-input-number
+                  v-model="baseInfoModel.studentNum"
+                  size="default"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -119,9 +143,15 @@
           </el-row>
         </el-form>
       </el-card>
-      <el-card :body-style="{ padding: 0 }" class="margin-top">
+      <el-card
+        :body-style="{padding: 0}"
+        class="margin-top"
+      >
         <div class="flex justify-end padding-sm">
-          <el-button size="mini" type="primary">立即添加</el-button>
+          <el-button
+            size="default"
+            type="primary"
+          >立即添加</el-button>
         </div>
       </el-card>
     </div>
@@ -134,16 +164,16 @@ import { reactive } from 'vue';
 const managerList = reactive([
   {
     id: 1,
-    name: '王冬'
+    name: '王冬',
   },
   {
     id: 2,
-    name: '陈新宇'
+    name: '陈新宇',
   },
   {
     id: 3,
-    name: '刘琪'
-  }
+    name: '刘琪',
+  },
 ]);
 const baseInfoModel = reactive({
   name: '',
@@ -153,7 +183,7 @@ const baseInfoModel = reactive({
   remark: '',
   manager: '',
   studentNum: 100,
-  endTime: ''
+  endTime: '',
 });
 </script>
 

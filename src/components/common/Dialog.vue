@@ -5,7 +5,7 @@
     v-model="dialogVisible"
     :close-on-click-modal="closeOnClickModal"
     :width="isMobileScreen ? '85%' : '45%'"
-    @vnodeMounted="onVnodeMounted"
+    draggable
   >
     <div class="dialog__content-wrapper">
       <slot name="content"></slot>
@@ -13,10 +13,17 @@
     <template #footer>
       <span class="dialog-footer">
         <slot name="footer-button"> </slot>
-        <el-button v-if="showCancel" size="mini" @click="dialogVisible = false">取 消</el-button>
-        <el-button :loading="loading" type="primary" size="mini" @click="onConfirm"
-          >确 定</el-button
-        >
+        <el-button
+          v-if="showCancel"
+          size="small"
+          @click="dialogVisible = false"
+        >取 消</el-button>
+        <el-button
+          :loading="loading"
+          type="primary"
+          size="small"
+          @click="onConfirm"
+        >确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -24,7 +31,6 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import VDraggable from '@/directive/draggable/draggable';
 import { useLayoutStore } from '@/layouts/hooks';
 import { nextTick, ref } from 'vue';
 export default defineComponent({
@@ -32,16 +38,16 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      default: '提示'
+      default: '提示',
     },
     closeOnClickModal: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showCancel: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props, { expose }) {
     const innerTitle = computed(() => props.title || '提示');
@@ -57,13 +63,12 @@ export default defineComponent({
       dialogVisible.value = true;
       loading.value = false;
       nextTick(() => {
-        const contentElement = document.querySelector('.dialog__content-wrapper');
+        const contentElement = document.querySelector(
+          '.dialog__content-wrapper'
+        );
         contentElement?.scrollTo({ top: 0 });
       });
       _callback.value = callback;
-    }
-    function onVnodeMounted() {
-      VDraggable.mounted(dialogRef.value?.$el.nextElementSibling);
     }
     function close() {
       dialogVisible.value = false;
@@ -86,7 +91,7 @@ export default defineComponent({
       show,
       close,
       showLoading,
-      closeLoading
+      closeLoading,
     });
     return {
       dialogRef,
@@ -97,11 +102,10 @@ export default defineComponent({
       onConfirm,
       close,
       show,
-      onVnodeMounted,
       showLoading,
-      closeLoading
+      closeLoading,
     };
-  }
+  },
 });
 </script>
 

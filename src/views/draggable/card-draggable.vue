@@ -2,7 +2,11 @@
   <div class="main-container">
     <el-card>
       <template #header>
-        <el-button size="small" type="primary" @click="resetElements">重置元素位置</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          @click="resetElements"
+        >重置元素位置</el-button>
       </template>
       <draggable
         :list="list"
@@ -12,9 +16,12 @@
         item-key="id"
         tag="ul"
       >
-        <template #item="{ element }">
+        <template #item="{element}">
           <li class="card-item">
-            <el-icon :color="element.color" size="20">
+            <el-icon
+              :color="element.color"
+              size="20"
+            >
               <component :is="element.icon + 'Icon'" />
             </el-icon>
             <div class="label">{{ element.label }}</div>
@@ -26,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from '@vue/runtime-core';
+import { defineComponent, onMounted, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import * as icons from '@element-plus/icons';
 interface IconItemType {
@@ -54,7 +61,7 @@ export default defineComponent({
       '#9c26b0',
       '#e03997',
       '#a5673f',
-      '#8799a3'
+      '#8799a3',
     ];
     const getRandomColor = (): string => {
       return colors[Math.floor(Math.random() * colors.length)];
@@ -71,7 +78,7 @@ export default defineComponent({
             label: `第 ${index + 1} 个元素`,
             icon: it,
             id: index,
-            color: getRandomColor()
+            color: getRandomColor(),
           };
         })
       );
@@ -79,9 +86,9 @@ export default defineComponent({
     return {
       drag,
       list,
-      resetElements
+      resetElements,
     };
-  }
+  },
 });
 </script>
 

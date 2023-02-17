@@ -1,10 +1,18 @@
 <template>
   <div class="result-wrapper">
     <div class="text-center"><i class="el-icon-success icon"></i></div>
-    <div class="result">操作成功</div>
-    <div class="tip">预计两个小时到账</div>
-    <el-card :body-style="{ padding: 0 }">
-      <el-form label-width="120px" size="small" class="form-wrapper">
+    <div class="result">
+      操作成功
+    </div>
+    <div class="tip">
+      预计两个小时到账
+    </div>
+    <el-card :body-style="{padding: 0}">
+      <el-form
+        label-width="120px"
+        size="small"
+        class="form-wrapper"
+      >
         <el-form-item label="付款账户：">
           <span>{{ accountInfo.account }}</span>
         </el-form-item>
@@ -24,8 +32,15 @@
       </el-form>
     </el-card>
     <div class="flex justify-end margin-tb">
-      <el-button size="small" type="warning" @click="preStep">再转一笔</el-button>
-      <el-button type="primary" size="small">查看订单</el-button>
+      <el-button
+        size="small"
+        type="warning"
+        @click="preStep"
+      >再转一笔</el-button>
+      <el-button
+        type="primary"
+        size="small"
+      >查看订单</el-button>
     </div>
   </div>
 </template>
@@ -39,8 +54,8 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
   emits: ['pre-step'],
   setup(props, { emit }) {
@@ -48,9 +63,9 @@ export default defineComponent({
       emit('pre-step');
     }
     return {
-      preStep
+      preStep,
     };
-  }
+  },
 });
 </script>
 

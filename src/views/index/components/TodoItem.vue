@@ -1,9 +1,10 @@
 <template>
   <div class="wating-item-action">
     <div class="flex align-center item-header-wrapper">
-      <div class="item-header flex justify-center align-center" :style="headerStyle">
-        {{ firstChar }}
-      </div>
+      <div
+        class="item-header flex justify-center align-center"
+        :style="headerStyle"
+      >{{ firstChar }}</div>
       <div class="item-time flex-sub">{{ item.time }}</div>
     </div>
     <div class="item-content margin-top-xs">{{ item.content }}</div>
@@ -11,14 +12,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/runtime-core';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'TodoItem',
   props: {
     item: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   setup(props) {
     const firstChar = computed(() => {
@@ -27,10 +28,10 @@ export default defineComponent({
     return {
       firstChar,
       headerStyle: {
-        backgroundColor: (props.item as any).bgColor
-      }
+        backgroundColor: (props.item as any).bgColor,
+      },
     };
-  }
+  },
 });
 </script>
 

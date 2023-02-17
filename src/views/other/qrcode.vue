@@ -1,5 +1,9 @@
 <template>
-  <el-card :body-style="{ padding: '0' }" shadow="never" class="main-container">
+  <el-card
+    :body-style="{padding: '0'}"
+    shadow="never"
+    class="main-container"
+  >
     <template #header>
       <div class="flex align-center">
         <span>生成二维码</span>
@@ -13,13 +17,26 @@
       </div>
     </template>
     <el-row class="margin-top">
-      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-        <el-card :body-style="{ padding: 0 }" class="margin-lr margin-bottom">
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="8"
+        :lg="8"
+        :xl="8"
+      >
+        <el-card
+          :body-style="{padding: 0}"
+          class="margin-lr margin-bottom"
+        >
           <template #header>
-            <div class="text-md">带logo</div>
+            <div class=" text-md">带logo</div>
           </template>
           <div class="text-center">
-            <canvas id="logoCanvas" width="250" height="250"></canvas>
+            <canvas
+              id="logoCanvas"
+              width="250"
+              height="250"
+            ></canvas>
           </div>
         </el-card>
       </el-col>
@@ -32,12 +49,19 @@
         v-for="(item, index) of qrcodeList"
         :key="index"
       >
-        <el-card :body-style="{ padding: 0 }" class="margin-lr margin-bottom">
+        <el-card
+          :body-style="{padding: 0}"
+          class="margin-lr margin-bottom"
+        >
           <template #header>
-            <div class="text-md">{{ item.title }}</div>
+            <div class=" text-md">{{ item.title }}</div>
           </template>
           <div class="text-center">
-            <img :src="item.url" class="canvas" style="margin: 0 auto" />
+            <img
+              :src="item.url"
+              class="canvas"
+              style="margin: 0 auto"
+            />
           </div>
         </el-card>
       </el-col>
@@ -47,7 +71,7 @@
 
 <script lang="ts">
 import { showErrorMessage } from '@/components/types';
-import { defineComponent, onMounted, reactive, ref } from '@vue/runtime-core';
+import { defineComponent, onMounted, reactive, ref } from 'vue';
 import Qrcode from 'qrcode';
 import logo from '@/assets/logo.png';
 interface QrcodeItem {
@@ -75,19 +99,19 @@ export default defineComponent({
         margin: it.margin,
         color: {
           dark: it.darkColor,
-          light: it.lightColor
-        }
+          light: it.lightColor,
+        },
       }).then((res) => {
         qrcodeList.push({
           title: it.title,
-          url: res
+          url: res,
         } as QrcodeItem);
       });
     };
     const generatorCodeWithLogo = () => {
       const canvas = document.getElementById('logoCanvas') as HTMLCanvasElement;
       Qrcode.toCanvas(canvas, qrText.value, {
-        width: 250
+        width: 250,
       }).then(() => {
         const context = canvas.getContext('2d');
         const img = new Image();
@@ -99,34 +123,34 @@ export default defineComponent({
       });
     };
     onMounted(() => {
-      qrText.value = 'HOLOMATIC';
+      qrText.value = 'vue-admin-work-x';
       [
         {
           title: '普通样式',
           lightColor: '',
-          darkColor: ''
+          darkColor: '',
         },
         {
           title: '前景色样式',
           lightColor: '',
-          darkColor: '#ff0000'
+          darkColor: '#ff0000',
         },
         {
           title: '背景色样式',
           lightColor: '#ffff00',
-          darkColor: ''
+          darkColor: '',
         },
         {
           title: '混合样式',
           lightColor: '#ffff00',
-          darkColor: '#ff0000'
+          darkColor: '#ff0000',
         },
         {
           title: '小间距',
           margin: 10,
-          lightColor: '#1890ff',
-          darkColor: ''
-        }
+          lightColor: '#409eff',
+          darkColor: '',
+        },
       ].forEach(generatorCode);
       generatorCodeWithLogo();
     });
@@ -134,9 +158,9 @@ export default defineComponent({
       qrcodeList,
       qrText,
       logo,
-      qrUrl
+      qrUrl,
     };
-  }
+  },
 });
 </script>
 

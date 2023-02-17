@@ -1,25 +1,26 @@
 import Axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
-const baseIp = 'http://localhost:8080/';
+const baseIp = 'http://api.vueadminwork.com/';
 
 export const CONTENT_TYPE = 'Content-Type';
 
-export const FORM_URLENCODED = 'application/x-www-form-urlencoded; charset=UTF-8';
+export const FORM_URLENCODED =
+  'application/x-www-form-urlencoded; charset=UTF-8';
 
-export const APPLICATION_JSON = 'application/json; charset=UTF-8';
+export const APPLICATION_JSON = 'application/json; baseAddress=UTF-8';
 
 export const TEXT_PLAIN = 'text/plain; charset=UTF-8';
 
 const service = Axios.create({
   baseURL: baseIp,
   timeout: 10 * 60 * 1000,
-  withCredentials: true // 跨域请求时发送cookie
 });
 
 service.interceptors.request.use(
   (config) => {
     !config.headers && (config.headers = {});
+    config.headers['Admin-Work-Version'] = 'x';
     if (!config.headers[CONTENT_TYPE]) {
       config.headers[CONTENT_TYPE] = APPLICATION_JSON;
     }

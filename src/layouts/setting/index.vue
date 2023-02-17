@@ -57,7 +57,10 @@
       <el-divider content-position="center">按钮显示</el-divider>
       <div class="setting-item-wrapper">
         <span>固定顶部导航</span>
-        <el-switch v-model="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
+        <el-switch
+          v-model="state.isFixedNavBar"
+          :disabled="state.layoutMode === 'ttb'"
+        />
       </div>
       <div class="setting-item-wrapper">
         <span>搜索</span>
@@ -89,13 +92,13 @@ import { primaryColors } from '../../setting';
 export default defineComponent({
   name: 'Setting',
   components: {
-    StyleExample
+    StyleExample,
   },
   props: {
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props, { expose }) {
     const opened = ref(props.show);
@@ -105,15 +108,15 @@ export default defineComponent({
         rightTopBg: '#ffffff',
         rightBottomBg: '#f5f5f5',
         checked: false,
-        themeId: 'dark-side'
+        themeId: 'dark-side',
       },
       {
         leftBg: '#ffffff',
         rightTopBg: '#ffffff',
         rightBottomBg: '#d4d4d4',
         checked: false,
-        themeId: 'light'
-      }
+        themeId: 'light',
+      },
     ]);
     const layoutExampleList = reactive([
       {
@@ -122,7 +125,7 @@ export default defineComponent({
         rightBottomBg: '#d4d4d4',
         checked: true,
         layoutId: 'ltr',
-        tipText: '左右'
+        tipText: '左右',
       },
       {
         leftBg: '#d4d4d4',
@@ -131,7 +134,7 @@ export default defineComponent({
         checked: false,
         layoutId: 'ttb',
         class: 'extra-class',
-        tipText: '上下'
+        tipText: '上下',
       },
       {
         leftBg: '#000000',
@@ -140,15 +143,15 @@ export default defineComponent({
         checked: false,
         layoutId: 'lcr',
         class: 'extra-class-1',
-        tipText: '分栏'
-      }
+        tipText: '分栏',
+      },
     ]);
     const primartyColorList = reactive(
       primaryColors.map((it) => {
         return {
           name: it,
           value: it,
-          checked: false
+          checked: false,
         };
       })
     );
@@ -189,7 +192,7 @@ export default defineComponent({
       store.saveSetting({ primaryColor: item.value });
     }
     expose({
-      openDrawer
+      openDrawer,
     });
     return {
       opened,
@@ -199,30 +202,12 @@ export default defineComponent({
       state,
       exampleClick,
       layoutExampleClick,
-      colorClick
+      colorClick,
     };
-  }
+  },
 });
 </script>
 
-<style lang="scss">
-.dark {
-  .el-drawer {
-    background-color: #272727 !important;
-  }
-}
-.light,
-.dark-side,
-.blue-side {
-  .el-drawer {
-    background-color: #ffff !important;
-  }
-}
-
-.el-drawer__header {
-  margin-bottom: 0 !important;
-}
-</style>
 <style lang="scss" scoped>
 $width: 60px;
 .wrapper {
@@ -246,7 +231,7 @@ $width: 60px;
       margin: 10px 8px;
     }
     .circle::after {
-      content: '';
+      content: "";
       display: block;
       margin: 0 auto;
       margin-top: 25px;

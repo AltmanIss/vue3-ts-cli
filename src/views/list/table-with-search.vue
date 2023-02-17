@@ -1,14 +1,19 @@
 <template>
   <div class="main-container">
-    <TableHeader
-      :can-collapsed="likeSearchModel.conditionItems && likeSearchModel.conditionItems.length !== 0"
-      :search-model="likeSearchModel.conditionItems"
-      :default-collapsed-state="true"
-      title="数据筛选"
-      @doSearch="doSearch"
-      @resetSearch="resetSearch"
-    />
     <TableBody>
+      <template #header>
+        <TableHeader
+          :can-collapsed="
+            likeSearchModel.conditionItems &&
+            likeSearchModel.conditionItems.length !== 0
+          "
+          :search-model="likeSearchModel.conditionItems"
+          :default-collapsed-state="true"
+          title="表格查询"
+          @doSearch="doSearch"
+          @resetSearch="resetSearch"
+        />
+      </template>
       <template #tableConfig>
         <TableConfig
           v-model:border="tableConfig.border"
@@ -16,8 +21,12 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="small" icon="PlusIcon">添加 </el-button>
-            <el-button type="danger" size="small" icon="DeleteIcon">删除 </el-button>
+            <el-button type="primary" size="small" icon="PlusIcon"
+              >添加
+            </el-button>
+            <el-button type="danger" size="small" icon="DeleteIcon"
+              >删除
+            </el-button>
           </template>
         </TableConfig>
       </template>
@@ -64,29 +73,47 @@
                       : require('@/assets/icon_sex_woman.png')
                   "
                 />
-                <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
+                <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
             </template>
           </el-table-column>
           <el-table-column align="center" label="状态">
             <template v-slot="scope">
-              <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" />
+              <el-switch
+                v-model="scope.row.status"
+                :active-value="1"
+                :inactive-value="0"
+              />
             </template>
           </el-table-column>
           <el-table-column align="center" label="地址" prop="address" />
-          <el-table-column align="center" label="上次登录时间" prop="lastLoginTime" width="160px" />
-          <el-table-column align="center" label="上次登录IP" prop="lastLoginIp" width="130px" />
+          <el-table-column
+            align="center"
+            label="上次登录时间"
+            prop="lastLoginTime"
+            width="160px"
+          />
+          <el-table-column
+            align="center"
+            label="上次登录IP"
+            prop="lastLoginIp"
+            width="130px"
+          />
         </el-table>
       </template>
       <template #footer>
-        <TableFooter ref="tableFooter" @refresh="doRefresh" @pageChanged="doRefresh" />
+        <TableFooter
+          ref="tableFooter"
+          @refresh="doRefresh"
+          @pageChanged="doRefresh"
+        />
       </template>
     </TableBody>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getTableList } from '@/api/url';
+import { getTableList, getUserList } from '@/api/url';
 import { useDataTable, useLikeSearch, usePost } from '@/hooks';
 import { onBeforeMount, onMounted, reactive, ref } from 'vue';
 import { ElMessageBox } from 'element-plus';
@@ -99,11 +126,11 @@ const {
   tableConfig,
   tableLoading,
   useHeight,
-  offTableCollapseTransition
+  offTableCollapseTransition,
 } = useDataTable();
 const post = usePost();
 likeSearchModel.extraParams = () => ({
-  ...tableFooter.value?.withPageInfoData()
+  ...tableFooter.value?.withPageInfoData(),
 });
 likeSearchModel.conditionItems = reactive([
   {
@@ -112,7 +139,7 @@ likeSearchModel.conditionItems = reactive([
     value: '',
     type: 'input',
     placeholder: '请输入用户姓名',
-    span: 8
+    span: 8,
   },
   {
     name: 'sex',
@@ -123,15 +150,15 @@ likeSearchModel.conditionItems = reactive([
     selectOptions: [
       {
         label: '男',
-        value: 0
+        value: 0,
       },
       {
         label: '女',
-        value: 1
-      }
+        value: 1,
+      },
     ],
-    span: 8
-  }
+    span: 8,
+  },
 ]);
 const doSearch = () => {
   const params = getSearchParams();
@@ -139,11 +166,11 @@ const doSearch = () => {
 };
 function doRefresh() {
   post({
-    url: getTableList,
+    url: getUserList,
     data: {
       ...tableFooter.value?.withPageInfoData(),
-      ...getSearchParams()
-    }
+      ...getSearchParams(),
+    },
   })
     .then(handleSuccess)
     .then((res: any) => {

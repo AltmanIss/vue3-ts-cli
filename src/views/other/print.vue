@@ -1,24 +1,38 @@
 <template>
   <div class="main-container">
-    <el-card :body-style="{ padding: '0px' }">
+    <el-card :body-style="{padding: '0px'}">
       <template #header>
         <div class="flex justify-between">
           <span :underline="false">打印图片</span>
-          <el-button type="primary" size="small" @click="printImage">打印</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="printImage"
+          >打印</el-button>
         </div>
       </template>
       <div class="image-wrapper">
         <img :src="imagePath" />
       </div>
     </el-card>
-    <el-card :body-style="{ padding: '5px' }" class="margin-top-xs">
+    <el-card
+      :body-style="{padding: '5px'}"
+      class="margin-top-xs"
+    >
       <template #header>
         <div class="flex justify-between">
           <span :underline="false">打印HTML</span>
-          <el-button type="primary" size="small" @click="printHtml">打印</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="printHtml"
+          >打印</el-button>
         </div>
       </template>
-      <div id="htmlWrapper" class="html-wrapper flex justify-center align-center flex-direction">
+      <div
+        id="htmlWrapper"
+        class="html-wrapper flex justify-center align-center flex-direction"
+      >
         <el-table
           :data="dataList"
           :header-cell-style="tableConfig.headerCellStyle"
@@ -26,9 +40,21 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
         >
-          <el-table-column align="center" label="姓名" prop="name" />
-          <el-table-column align="center" label="年龄" prop="age" />
-          <el-table-column align="center" label="性别" prop="gender" />
+          <el-table-column
+            align="center"
+            label="姓名"
+            prop="name"
+          />
+          <el-table-column
+            align="center"
+            label="年龄"
+            prop="age"
+          />
+          <el-table-column
+            align="center"
+            label="性别"
+            prop="gender"
+          />
         </el-table>
       </div>
     </el-card>
@@ -47,32 +73,32 @@ const dataList = shallowReactive([
   {
     name: '张三',
     age: 10,
-    gender: '男'
+    gender: '男',
   },
   {
     name: '李四',
     age: 40,
-    gender: '男'
+    gender: '男',
   },
   {
     name: '王五',
     age: 30,
-    gender: '女'
-  }
+    gender: '女',
+  },
 ]);
 
 function printImage() {
   printJS({
     printable: imagePath,
     type: 'image',
-    showModal: false
+    showModal: false,
   });
 }
 function printHtml() {
   printJS({
     printable: 'htmlWrapper',
     type: 'html',
-    targetStyles: ['*']
+    targetStyles: ['*'],
   });
 }
 </script>

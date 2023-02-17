@@ -4,11 +4,18 @@ import Cookies from 'js-cookie';
 import Avatar from '@/assets/img_avatar.gif';
 import { defineStore } from 'pinia';
 import { UserState } from '../types';
-import { ROLE_ID_KEY, USER_ID_KEY, USER_INFO_KEY, USER_TOKEN_KEY } from '../keys';
+import {
+  ROLE_ID_KEY,
+  USER_ID_KEY,
+  USER_INFO_KEY,
+  USER_TOKEN_KEY,
+} from '../keys';
 
 const defaultAvatar = Avatar;
 
-const userInfo: UserState = JSON.parse(localStorage.getItem(USER_INFO_KEY) || '{}');
+const userInfo: UserState = JSON.parse(
+  localStorage.getItem(USER_INFO_KEY) || '{}'
+);
 
 const useUserStore = defineStore('user', {
   state: () => {
@@ -19,7 +26,7 @@ const useUserStore = defineStore('user', {
       token: userInfo.token || '',
       userName: userInfo.userName || '',
       nickName: userInfo.nickName || '',
-      avatar: userInfo.avatar || defaultAvatar
+      avatar: userInfo.avatar || defaultAvatar,
     };
   },
   getters: {
@@ -28,7 +35,7 @@ const useUserStore = defineStore('user', {
     },
     getRroleId(): number {
       return this.roleId;
-    }
+    },
   },
   actions: {
     saveUser(userInfo: UserState) {
@@ -63,8 +70,8 @@ const useUserStore = defineStore('user', {
         LayoutStore.reset();
         res();
       });
-    }
-  }
+    },
+  },
 });
 
 export default useUserStore;

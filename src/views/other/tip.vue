@@ -1,60 +1,109 @@
 <template>
   <div class="main-container">
-    <el-card :body-style="{ padding: 0 }">
+    <el-card :body-style="{padding: 0}">
       <template #header>
         <span type="text">通知提示</span>
       </template>
       <div class="padding">
-        <el-button size="small" type="primary" plain @click="openNotify('primary')">普通</el-button>
-        <el-button size="small" type="success" plain @click="openNotify('success')">成功</el-button>
-        <el-button size="small" type="warning" plain @click="openNotify('warning')">警告</el-button>
-        <el-button size="small" type="danger" plain @click="openNotify('danger')">错误</el-button>
-        <el-button size="small" type="info" plain @click="openNotify('html')"
-          >带有HTML片段</el-button
-        >
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          @click="openNotify('primary')"
+        >普通</el-button>
+        <el-button
+          size="small"
+          type="success"
+          plain
+          @click="openNotify('success')"
+        >成功</el-button>
+        <el-button
+          size="small"
+          type="warning"
+          plain
+          @click="openNotify('warning')"
+        >警告</el-button>
+        <el-button
+          size="small"
+          type="danger"
+          plain
+          @click="openNotify('danger')"
+        >错误</el-button>
+        <el-button
+          size="small"
+          type="info"
+          plain
+          @click="openNotify('html')"
+        >带有HTML片段</el-button>
       </div>
     </el-card>
-    <el-card :body-style="{ padding: 0 }">
+    <el-card :body-style="{padding: 0}">
       <template #header>
         <span type="text">确认对话框</span>
       </template>
       <div class="padding">
-        <el-button size="small" type="primary" plain @click="openConfirm('primary')"
-          >普通</el-button
-        >
-        <el-button size="small" type="warning" plain @click="openConfirm('warning')"
-          >确认</el-button
-        >
-        <el-button size="small" type="info" plain @click="openConfirm('html')"
-          >带有HTML片段</el-button
-        >
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          @click="openConfirm('primary')"
+        >普通</el-button>
+        <el-button
+          size="small"
+          type="warning"
+          plain
+          @click="openConfirm('warning')"
+        >确认</el-button>
+        <el-button
+          size="small"
+          type="info"
+          plain
+          @click="openConfirm('html')"
+        >带有HTML片段</el-button>
       </div>
     </el-card>
-    <el-card :body-style="{ padding: 0 }">
+    <el-card :body-style="{padding: 0}">
       <template #header>
         <span type="text">消息提示</span>
       </template>
       <div class="padding">
-        <el-button size="small" type="primary" plain @click="openMessage('primary')"
-          >普通</el-button
-        >
-        <el-button size="small" type="success" plain @click="openMessage('success')"
-          >成功</el-button
-        >
-        <el-button size="small" type="warning" plain @click="openMessage('warning')"
-          >警告</el-button
-        >
-        <el-button size="small" type="danger" plain @click="openMessage('danger')">错误</el-button>
-        <el-button size="small" type="info" plain @click="openMessage('html')"
-          >带有HTML片段</el-button
-        >
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          @click="openMessage('primary')"
+        >普通</el-button>
+        <el-button
+          size="small"
+          type="success"
+          plain
+          @click="openMessage('success')"
+        >成功</el-button>
+        <el-button
+          size="small"
+          type="warning"
+          plain
+          @click="openMessage('warning')"
+        >警告</el-button>
+        <el-button
+          size="small"
+          type="danger"
+          plain
+          @click="openMessage('danger')"
+        >错误</el-button>
+        <el-button
+          size="small"
+          type="info"
+          plain
+          @click="openMessage('html')"
+        >带有HTML片段</el-button>
       </div>
     </el-card>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Tip',
@@ -64,28 +113,28 @@ export default defineComponent({
         case 'primary':
           (this as any).$notify({
             title: '提示',
-            message: '用户名或者密码错误'
+            message: '用户名或者密码错误',
           });
           break;
         case 'success':
           (this as any).$notify({
             title: '提示',
             message: '恭喜，登录成功',
-            type: 'success'
+            type: 'success',
           });
           break;
         case 'warning':
           (this as any).$notify({
             title: '提示',
             message: '确定要删除此选项吗？',
-            type: 'warning'
+            type: 'warning',
           });
           break;
         case 'danger':
           (this as any).$notify({
             title: '提示',
             message: '操作失败，请检查请求参数',
-            type: 'error'
+            type: 'error',
           });
           break;
         case 'html':
@@ -96,7 +145,7 @@ export default defineComponent({
             <li style="color: red">选择图片</li>
             <li style="font-weight: bold">上传图片</li>
             <li style="font-size: 20px">展示对应的图片</li>
-            </ul>`
+            </ul>`,
           });
           break;
       }
@@ -110,9 +159,9 @@ export default defineComponent({
               (this as any).$notify({
                 title: '提示',
                 message: '已退出当前系统',
-                type: 'success'
+                type: 'success',
               });
-            }
+            },
           });
           break;
         case 'warning':
@@ -120,18 +169,18 @@ export default defineComponent({
             .$confirm('此操作将永久删除该文件, 是否继续?', '重要提示', {
               confirmButtonText: '删除',
               cancelButtonText: '再想想',
-              type: 'warning'
+              type: 'warning',
             })
             .then(() => {
               (this as any).$message({
                 type: 'success',
-                message: '删除成功!'
+                message: '删除成功!',
               });
             })
             .catch(() => {
               (this as any).$message({
                 type: 'info',
-                message: '已取消删除'
+                message: '已取消删除',
               });
             });
           break;
@@ -144,7 +193,7 @@ export default defineComponent({
             </ul>`,
             '请按以下步骤进行操作',
             {
-              dangerouslyUseHTMLString: true
+              dangerouslyUseHTMLString: true,
             }
           );
           break;
@@ -158,19 +207,19 @@ export default defineComponent({
         case 'success':
           (this as any).$message({
             message: '恭喜，登录成功',
-            type: 'success'
+            type: 'success',
           });
           break;
         case 'warning':
           (this as any).$message({
             message: '未选择任何要删除的条目',
-            type: 'warning'
+            type: 'warning',
           });
           break;
         case 'danger':
           (this as any).$message({
             message: '操作失败，请检查请求参数',
-            type: 'error'
+            type: 'error',
           });
           break;
         case 'html':
@@ -180,12 +229,12 @@ export default defineComponent({
             <li style="color: red">选择图片</li>
             <li style="font-weight: bold">上传图片</li>
             <li style="font-size: 20px">展示对应的图片</li>
-            </ul>`
+            </ul>`,
           });
           break;
       }
-    }
-  }
+    },
+  },
 });
 </script>
 

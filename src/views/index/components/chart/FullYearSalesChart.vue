@@ -1,29 +1,60 @@
 <template>
-  <el-skeleton :loading="loading" animated>
+  <el-skeleton
+    :loading="loading"
+    animated
+  >
     <template #template>
       <el-card>
-        <el-skeleton-item variant="h3" style="width: 50%" />
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
         <div class="margin-top">
           <el-skeleton-item variant="text" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
         </div>
       </el-card>
     </template>
     <template #default>
-      <el-card class="chart-item-container" :body-style="{ padding: 0 }" shadow="never">
+      <el-card
+        class="chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
         <template #header>
-          <div class="text-bold">全年销售额分析图（数据为模拟，只为演示效果）</div>
+          <div class="text-bold">
+            全年销售额分析图（数据为模拟，只为演示效果）
+          </div>
         </template>
-        <div ref="fullYearSalesChart" class="chart-item"></div>
+        <div
+          ref="fullYearSalesChart"
+          class="chart-item"
+        >
+        </div>
       </el-card>
     </template>
   </el-skeleton>
 </template>
 <script lang="ts">
 import { useEcharts } from '@/hooks';
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 import { dispose, graphic } from 'echarts';
 import { random } from 'lodash';
 const months = [
@@ -38,7 +69,7 @@ const months = [
   '九月',
   '十月',
   '十一月',
-  '十二月'
+  '十二月',
 ];
 function getData() {
   const data: number[] = [];
@@ -61,21 +92,21 @@ export default defineComponent({
           left: '2%',
           right: '2%',
           bottom: '5%',
-          containLabel: true
+          containLabel: true,
         },
         legend: {
-          data: ['2020全年销售额']
+          data: ['2020全年销售额'],
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         xAxis: {
           type: 'category',
-          data: months
+          data: months,
         },
         yAxis: {
           type: 'value',
-          max: 200
+          max: 200,
         },
         series: [
           {
@@ -87,47 +118,37 @@ export default defineComponent({
               show: true,
               formatter(val: any) {
                 return val.data + '万';
-              }
+              },
             },
             itemStyle: {
               color: new graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: '#83bff6' },
                 { offset: 0.5, color: '#188df0' },
-                { offset: 1, color: '#188df0' }
-              ])
-            }
-          }
-        ]
+                { offset: 1, color: '#188df0' },
+              ]),
+            },
+          },
+        ],
       };
       setTimeout(() => {
         loading.value = false;
-        nextTick(() => useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(option));
-        interval = setInterval(() => {
-          const option = {
-            series: [
-              {
-                data: getData()
-              }
-            ]
-          };
-          useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(option);
-        }, 5000);
+        nextTick(() =>
+          useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
+            option
+          )
+        );
       }, 1000);
     };
     const updateChart = () => {
       useEcharts(fullYearSalesChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(fullYearSalesChart.value as HTMLDivElement);
-      clearInterval(interval);
-    });
     return {
       loading,
       fullYearSalesChart,
-      updateChart
+      updateChart,
     };
-  }
+  },
 });
 </script>
 

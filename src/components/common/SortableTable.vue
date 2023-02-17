@@ -1,7 +1,13 @@
 <template>
   <el-popover placement="bottom" trigger="click">
-    <div style="border-bottom: 1px solid #f5f5f5" class="flex justify-between align-center">
-      <el-checkbox v-model="allChecked" :indeterminate="isIndeterminate" @change="onAllChange"
+    <div
+      style="border-bottom: 1px solid #f5f5f5"
+      class="flex justify-between align-center"
+    >
+      <el-checkbox
+        v-model="allChecked"
+        :indeterminate="isIndeterminate"
+        @change="onAllChange"
         >全选</el-checkbox
       >
       <el-button type="text" @click="onReset">重置</el-button>
@@ -20,9 +26,12 @@
               <SortIcon />
             </el-icon>
           </span>
-          <el-checkbox v-model="element.checked" :label="element.prop" @change="onChange">{{
-            element.title
-          }}</el-checkbox>
+          <el-checkbox
+            v-model="element.checked"
+            :label="element.prop"
+            @change="onChange"
+            >{{ element.title }}</el-checkbox
+          >
         </div>
       </template>
     </draggable>
@@ -44,8 +53,8 @@ export default defineComponent({
   emits: ['update'],
   props: {
     tableProps: {
-      type: Array as PropType<TablePropsType[]>
-    }
+      type: Array as PropType<TablePropsType[]>,
+    },
   },
   setup(props, { emit }) {
     const tempTableProps = props.tableProps as Array<TablePropsType>;
@@ -58,21 +67,29 @@ export default defineComponent({
       return { ...it } as TablePropsType;
     });
     const isIndeterminate = ref(
-      tempTableProps.filter((it: TablePropsType) => it.checked).length !== tempTableProps.length
+      tempTableProps.filter((it: TablePropsType) => it.checked).length !==
+        tempTableProps.length
     );
-    const allChecked = ref(tempTableProps.every((it: TablePropsType) => it.checked));
+    const allChecked = ref(
+      tempTableProps.every((it: TablePropsType) => it.checked)
+    );
     const onAllChange = (value: boolean) => {
-      innerTableProps.value.forEach((it: TablePropsType) => (it.checked = value));
+      innerTableProps.value.forEach(
+        (it: TablePropsType) => (it.checked = value)
+      );
       emit(
         'update',
         innerTableProps.value.filter((it) => it.checked)
       );
     };
     const onChange = () => {
-      const checkedItems = innerTableProps.value.filter((it: TablePropsType) => it.checked);
+      const checkedItems = innerTableProps.value.filter(
+        (it: TablePropsType) => it.checked
+      );
       allChecked.value = checkedItems.length === innerTableProps.value.length;
       isIndeterminate.value =
-        checkedItems.length > 0 && checkedItems.length !== innerTableProps.value.length;
+        checkedItems.length > 0 &&
+        checkedItems.length !== innerTableProps.value.length;
       emit('update', checkedItems);
     };
     const onReset = () => {
@@ -96,9 +113,9 @@ export default defineComponent({
       onChange,
       onReset,
       onDraggableEnd,
-      SettingIcon
+      SettingIcon,
     };
-  }
+  },
 });
 </script>
 

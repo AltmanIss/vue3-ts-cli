@@ -15,9 +15,13 @@
             @click="changeTab(item)"
           >
             <el-icon>
-              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
+              <component
+                :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"
+              />
             </el-icon>
-            <span class="label">{{ item.meta ? item.meta.title : item.name }}</span>
+            <span class="label">{{
+              item.meta ? item.meta.title : item.name
+            }}</span>
           </div>
         </div>
       </el-scrollbar>
@@ -48,8 +52,8 @@ export default {
   props: {
     showLogo: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -59,8 +63,9 @@ export default {
       tabs: null,
       routes: [],
       MenuIcon,
-      bgColor: store.state.theme === 'light' ? 'var(--el-color-white)' : '#021a32',
-      labelColor: store.state.theme === 'light' ? '#333333' : '#bbbbbb'
+      bgColor:
+        store.state.theme === 'light' ? 'var(--el-color-white)' : '#021a32',
+      labelColor: store.state.theme === 'light' ? '#333333' : '#bbbbbb',
     };
   },
   watch: {
@@ -79,13 +84,13 @@ export default {
     'state.theme'(newVal) {
       this.bgColor = newVal === 'light' ? 'var(--el-color-white)' : '#021a32';
       this.labelColor = newVal === 'light' ? '#333333' : '#bbbbbb';
-    }
+    },
   },
   mounted() {
     this.tabs = store.getSplitTabs().map((it, index) => {
       return {
         ...it,
-        active: index === 0
+        active: index === 0,
       };
     });
     this.doChangeTab(this.$route);
@@ -137,13 +142,13 @@ export default {
           this.$router.push({ path: path.resolve(fullPath, firstItem.path) });
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .open-status {
   width: $menuWidth;
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.12);
@@ -182,7 +187,7 @@ export default {
     .tab-split-content-wrapper {
       position: relative;
       @mixin after {
-        content: '';
+        content: "";
         position: absolute;
         left: 5px;
         top: 5px;
@@ -262,7 +267,7 @@ export default {
 }
 </style>
 <style lang="scss">
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .scrollbar-wrap-class {
   overflow-x: hidden !important;
 }

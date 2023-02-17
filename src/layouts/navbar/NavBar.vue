@@ -2,7 +2,8 @@
   <div class="vaw-nav-bar-wrapper">
     <Humburger />
     <Breadcrumb v-if="state.device !== 'mobile'" />
-    <div style="flex: 1"></div>
+    <div style="flex: 1">
+    </div>
     <div class="right-wrapper">
       <ActionItems />
     </div>
@@ -12,17 +13,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import store from '../store';
+<script lang='ts'>
+import { defineComponent } from 'vue'
+import store from '../store'
 export default defineComponent({
   name: 'NavBar',
   setup() {
     return {
       state: store.state
-    };
+    }
   }
-});
+})
 </script>
 
 <style scoped lang="scss">

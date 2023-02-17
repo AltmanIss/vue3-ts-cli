@@ -2,10 +2,10 @@ import LayoutStore, { Layout } from '@/layouts';
 import { isExternal, mapTwoLevelRouter } from '@/layouts/utils';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import router, { routes as constantRoutes } from '../router';
+import router, { asyncRoutes, constantRoutes } from '../router';
 import Cookies from 'js-cookie';
 import { post } from '@/api/http';
-import { baseAddress, getMenuListByRoleId } from '@/api/url';
+import { getMenuListByRoleId } from '@/api/url';
 import { RouteRecordRaw } from 'vue-router';
 import { toHump } from '.';
 import { RouteRecordRawWithHidden } from '@/layouts/types';
@@ -15,7 +15,7 @@ import pinia from '@/store/pinia';
 const userStore = useUserStore(pinia);
 
 NProgress.configure({
-  showSpinner: false
+  showSpinner: false,
 });
 
 interface OriginRoute {
@@ -27,17 +27,18 @@ interface OriginRoute {
   cacheable?: boolean;
   icon?: string;
   tip?: string | number;
+  isSingle?: boolean;
   children: Array<OriginRoute>;
 }
 
 function getRoutes() {
   return post({
-    url: baseAddress + getMenuListByRoleId,
+    url: getMenuListByRoleId,
     method: 'POST',
     data: {
       userId: userStore.getUserId,
-      roleId: userStore.getUserId
-    }
+      roleId: userStore.getUserId,
+    },
   }).then((res) => {
     return generatorRoutes(res.data);
   });
@@ -47,15 +48,8 @@ function getComponent(it: OriginRoute) {
   return (): any => import('@/views' + it.menuUrl + '.vue');
 }
 
-function getCharCount(str: string, char: string) {
-  const regex = new RegExp(char, 'g');
-  const result = str.match(regex);
-  const count = !result ? 0 : result.length;
-  return count;
-}
-
-function isMenu(path: string) {
-  return getCharCount(path, '/') === 1;
+function isMenu(route: OriginRoute) {
+  return route.children && route.children.length > 0;
 }
 
 function getNameByUrl(menuUrl: string) {
@@ -70,14 +64,16 @@ function generatorRoutes(res: Array<OriginRoute>) {
       path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
       name: getNameByUrl(it.menuUrl),
       hidden: !!it.hidden,
-      component: isMenu(it.menuUrl) ? Layout : getComponent(it),
+      component: isMenu(it) ? Layout : getComponent(it),
+      children: [],
       meta: {
         title: it.menuName,
         affix: !!it.affix,
         cacheable: !!it.cacheable,
         icon: it.icon || '',
-        badge: it.tip
-      }
+        badge: it.tip,
+        isSingle: !!it.isSingle,
+      },
     };
     if (it.children) {
       route.children = generatorRoutes(it.children);
@@ -103,7 +99,7 @@ router.beforeEach(async (to) => {
       NProgress.done();
       return {
         path: '/login',
-        query: { redirect: to.fullPath }
+        query: { redirect: to.fullPath },
       };
     } else {
       const isEmptyRoute = LayoutStore.isEmptyPermissionRoute();
@@ -115,13 +111,17 @@ router.beforeEach(async (to) => {
         accessRoutes.push({
           path: '/:pathMatch(.*)*',
           redirect: '/404',
-          hidden: true
+          hidden: true,
         } as RouteRecordRaw);
         const mapRoutes = mapTwoLevelRouter(accessRoutes);
         mapRoutes.forEach((it: any) => {
           router.addRoute(it);
         });
-        LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes]);
+        LayoutStore.initPermissionRoute([
+          ...asyncRoutes,
+          ...constantRoutes,
+          ...accessRoutes,
+        ]);
         return { ...to, replace: true };
       } else {
         return true;

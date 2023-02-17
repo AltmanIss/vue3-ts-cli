@@ -1,10 +1,14 @@
 <template>
-  <div ref="eChartContainer" style="height: 180px; width: 100%"></div>
+  <div
+    ref="eChartContainer"
+    style="height: 180px; width: 100%"
+  >
+  </div>
 </template>
 
 <script lang="ts">
 import useEcharts from '@/hooks/Echarts';
-import { defineComponent, onMounted, ref, toRef } from '@vue/runtime-core';
+import { defineComponent, onMounted, ref, toRef } from 'vue';
 import { EChartsCoreOption } from 'echarts';
 
 export default defineComponent({
@@ -12,12 +16,12 @@ export default defineComponent({
   props: {
     id: {
       type: Number,
-      default: 0
+      default: 0,
     },
     options: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   setup(prop) {
     const eChartContainer = ref<HTMLDivElement | null>(null);
@@ -28,10 +32,11 @@ export default defineComponent({
       instance.resize();
     });
     return {
-      eChartContainer
+      eChartContainer,
     };
-  }
+  },
 });
 </script>
 
-<style></style>
+<style>
+</style>

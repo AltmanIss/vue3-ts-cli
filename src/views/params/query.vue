@@ -13,16 +13,17 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const state = reactive({
-      params: {}
+      params: {},
     });
     onMounted(() => {
       state.params = route.query;
     });
     return {
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>
 
-<style></style>
+<style>
+</style>

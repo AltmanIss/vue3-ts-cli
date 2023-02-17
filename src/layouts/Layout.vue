@@ -3,17 +3,22 @@
     class="vaw-layout-container"
     :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
   >
-    <template v-if="state.layoutMode === 'ttb'">
-      <VAWHeader v-if="isShowHeader" />
-      <MainLayout :show-nav-bar="false" />
-    </template>
-    <template v-else-if="state.layoutMode === 'lcr'">
-      <TabSplitSideBar />
+    <template v-if="state.device === 'mobile'">
+      <SideBar ref="sideBar" />
       <MainLayout />
     </template>
     <template v-else>
-      <SideBar ref="sideBar" />
-      <MainLayout />
+      <template v-if="state.layoutMode === 'ttb'">
+        <VAWHeader />
+        <InnerSideBar />
+      </template>
+      <template v-else-if="state.layoutMode === 'lcr'">
+        <TabSplitSideBar />
+      </template>
+      <template v-else>
+        <SideBar ref="sideBar" />
+      </template>
+      <MainLayout :show-nav-bar="state.layoutMode !== 'ttb'" />
     </template>
     <div
       v-if="state.device === 'mobile'"
@@ -27,13 +32,7 @@
 
 <script lang="ts">
 import { useEmit } from '@/hooks';
-import {
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-} from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import store from './store';
 export default defineComponent({
   name: 'Layout',
@@ -42,9 +41,6 @@ export default defineComponent({
     const appSettingRef = ref();
     emit?.on('show_setting', () => {
       appSettingRef.value.openDrawer();
-    });
-    const isShowHeader = computed(() => {
-      return store.isShowHeader();
     });
     function handleScreenResize() {
       const width = document.body.clientWidth;
@@ -75,7 +71,6 @@ export default defineComponent({
     return {
       appSettingRef,
       state: store.state,
-      isShowHeader,
       closeMenu,
     };
   },

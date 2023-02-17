@@ -1,10 +1,21 @@
 <template>
   <el-card>
     <el-row class="icon-parent">
-      <el-col :xs="6" :md="3" :sm="3" :lg="3" :xl="3" v-for="item of icons" :key="item.icon_id">
+      <el-col
+        :xs="6"
+        :md="3"
+        :sm="3"
+        :lg="3"
+        :xl="3"
+        v-for="item of icons"
+        :key="item.icon_id"
+      >
         <div class="icon-wrapper flex flex-direction justify-center align-center">
-          <SvgIcon :icon-class="item.font_class" style="font-size: 20px" />
-          <div class="text-xs margin-top">{{ item.font_class }}</div>
+          <SvgIcon
+            :icon-class="item.font_class"
+            style="font-size: 20px"
+          />
+          <div class=" text-xs margin-top">{{item.font_class}}</div>
           <div
             :id="item.font_class"
             class="copy text-center"
@@ -46,7 +57,8 @@ export default defineComponent({
     const icons = reactive([] as Array<IconItem>);
     const tableFooter = ref<TableFooter>();
     function doRefresh() {
-      const { page = 10, pageSize = 100 } = tableFooter.value?.withPageInfoData() as any;
+      const { page = 10, pageSize = 100 } =
+        tableFooter.value?.withPageInfoData() as any;
       icons.length = 0;
       const start = (page - 1) * pageSize;
       icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
@@ -71,9 +83,9 @@ export default defineComponent({
       icons,
       onCopy,
       doRefresh,
-      getClipboardText
+      getClipboardText,
     };
-  }
+  },
 });
 </script>
 

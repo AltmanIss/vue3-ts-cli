@@ -29,7 +29,9 @@
             </el-col>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmitBuildForm">立即创建</el-button>
+            <el-button type="primary" @click="onSubmitBuildForm"
+              >立即创建</el-button
+            >
             <el-button @click="onResetBuildForm">重置</el-button>
           </el-form-item>
         </template>
@@ -39,9 +41,18 @@
       <template #header>
         <div>普通表单（以下表单由el-form手动创建）</div>
       </template>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleFormRef" label-width="100px" size="small">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleFormRef"
+        label-width="100px"
+        size="small"
+      >
         <el-form-item label="活动名称" prop="name">
-          <el-input v-model="ruleForm.name" placeholder="请输入活动名称"></el-input>
+          <el-input
+            v-model="ruleForm.name"
+            placeholder="请输入活动名称"
+          ></el-input>
         </el-form-item>
         <el-form-item label="活动区域" prop="region">
           <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
@@ -92,7 +103,9 @@
           <el-input type="textarea" v-model="ruleForm.desc"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmitForm('ruleForm')">立即创建</el-button>
+          <el-button type="primary" @click="onSubmitForm('ruleForm')"
+            >立即创建</el-button
+          >
           <el-button @click="onResetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -114,12 +127,12 @@ const ruleForm = reactive({
   delivery: false,
   type: [],
   resource: '',
-  desc: ''
+  desc: '',
 });
 const rules = {
   name: [
     { required: true, message: '请输入活动名称', trigger: 'blur' },
-    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' },
   ],
   region: [{ required: true, message: '请选择活动区域', trigger: 'change' }],
   date1: [
@@ -127,27 +140,27 @@ const rules = {
       type: 'date',
       required: true,
       message: '请选择日期',
-      trigger: 'change'
-    }
+      trigger: 'change',
+    },
   ],
   date2: [
     {
       type: 'date',
       required: true,
       message: '请选择时间',
-      trigger: 'change'
-    }
+      trigger: 'change',
+    },
   ],
   type: [
     {
       type: 'array',
       required: true,
       message: '请至少选择一个活动性质',
-      trigger: 'change'
-    }
+      trigger: 'change',
+    },
   ],
   resource: [{ required: true, message: '请选择活动资源', trigger: 'change' }],
-  desc: [{ required: true, message: '请填写活动形式', trigger: 'blur' }]
+  desc: [{ required: true, message: '请填写活动形式', trigger: 'blur' }],
 };
 const ruleFormRef = ref();
 const onResetForm = () => {
@@ -175,7 +188,7 @@ const builderIetms = reactive<Array<FormItem>>([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     name: 'area',
@@ -186,12 +199,12 @@ const builderIetms = reactive<Array<FormItem>>([
     selectOptions: [
       {
         label: '区域一',
-        value: 'shanghai'
+        value: 'shanghai',
       },
       {
         label: '区域二',
-        value: 'beijing'
-      }
+        value: 'beijing',
+      },
     ],
     span: 4,
     validator(item: FormItem) {
@@ -200,7 +213,7 @@ const builderIetms = reactive<Array<FormItem>>([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     name: 'delivery',
@@ -209,7 +222,7 @@ const builderIetms = reactive<Array<FormItem>>([
     value: false,
     reset() {
       this.value = false;
-    }
+    },
   },
   {
     name: 'type',
@@ -220,20 +233,20 @@ const builderIetms = reactive<Array<FormItem>>([
     checkOptions: [
       {
         label: '美食/餐厅线上活动',
-        value: 1
+        value: 1,
       },
       {
         label: '地推活动',
-        value: 2
+        value: 2,
       },
       {
         label: '线下主题活动',
-        value: 3
+        value: 3,
       },
       {
         label: '单纯品牌曝光',
-        value: 4
-      }
+        value: 4,
+      },
     ],
     validator(item: FormItem) {
       if (isEmpty(item.value)) {
@@ -244,7 +257,7 @@ const builderIetms = reactive<Array<FormItem>>([
     },
     reset() {
       this.value = [];
-    }
+    },
   },
   {
     name: 'resource',
@@ -255,12 +268,12 @@ const builderIetms = reactive<Array<FormItem>>([
     radioOptions: [
       {
         label: '线上品牌商赞助',
-        value: 1
+        value: 1,
       },
       {
         label: '线下场地免费',
-        value: 2
-      }
+        value: 2,
+      },
     ],
     validator(item: FormItem) {
       if (!item.value) {
@@ -268,7 +281,7 @@ const builderIetms = reactive<Array<FormItem>>([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     name: 'desc',
@@ -283,8 +296,8 @@ const builderIetms = reactive<Array<FormItem>>([
         return false;
       }
       return true;
-    }
-  }
+    },
+  },
 ]);
 const activeDate = ref('');
 const activeTime = ref('');

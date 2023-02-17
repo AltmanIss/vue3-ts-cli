@@ -1,11 +1,20 @@
 <template>
-  <el-scrollbar :class="mMode === 'vertical' ? 'scrollbar' : ''" wrap-class="scrollbar-wrap-class">
+  <el-scrollbar
+    :class="
+      mMode === 'vertical'
+        ? innerMode
+          ? 'scrollbar-inner-mode'
+          : 'scrollbar'
+        : ''
+    "
+    wrap-class="scrollbar-wrap-class"
+  >
     <el-menu
       :default-active="activePath"
       :mode="mMode"
-      :collapse="state.isCollapse"
+      :collapse="mMode === 'vertical' && state.isCollapse"
       active-text-color="var(--el-color-primary)"
-      :text-color="state.theme === 'light' ? '#303133' : '#bbbbbb'"
+      :text-color="textColor"
       :background-color="bgColor"
       :style="{ height: mMode === 'vertical' ? '100%' : '48px' }"
     >
@@ -15,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, ref, watch, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, defineComponent, nextTick, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import store from '../../store';
 export default defineComponent({
   name: 'ScrollerMenu',
@@ -26,21 +35,38 @@ export default defineComponent({
       require: true,
       default: () => {
         return [];
-      }
+      },
     },
     fullPath: {
       type: String,
-      default: null
+      default: null,
     },
     mode: {
       type: String,
-      default: 'vertical'
-    }
+      default: 'vertical',
+    },
+    innerMode: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const state = store.state;
     const route = useRoute();
-    const bgColor = ref(state.theme === 'light' ? 'var(--el-color-white)' : '#001428');
+    const bgColor = computed(() => {
+      return state.theme === 'light'
+        ? 'var(--el-color-white)'
+        : props.innerMode
+        ? 'var(--el-color-white)'
+        : '#001428';
+    });
+    const textColor = computed(() => {
+      return state.theme === 'light'
+        ? '#303133'
+        : props.innerMode
+        ? '#303133'
+        : '#bbbbbb';
+    });
     const activePath = ref(route.fullPath);
     const mMode = computed(() => {
       return props.mode;
@@ -49,28 +75,30 @@ export default defineComponent({
       () => route.fullPath,
       () => {
         nextTick(() => {
-          activePath.value = route.fullPath;
+          if (mMode.value === 'vertical') {
+            activePath.value = route.fullPath;
+          } else {
+            activePath.value = route.matched[0].path;
+          }
         });
-      }
-    );
-    watch(
-      () => state.theme,
-      (newVal) => {
-        bgColor.value = newVal === 'light' ? 'var(--el-color-white)' : '#001428';
+      },
+      {
+        immediate: true,
       }
     );
     return {
       mMode,
       activePath,
       state,
-      bgColor
+      bgColor,
+      textColor,
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 :deep(.el-menu-item) {
   display: flex;
   align-items: center;
@@ -84,7 +112,7 @@ export default defineComponent({
   color: var(--el-menu-hover-text-color) !important;
 }
 :deep(.el-menu .el-menu-item) {
-  height: 45px;
+  height: 48px;
   line-height: 0;
 }
 :deep(.el-sub-menu .el-menu-item) {
@@ -92,10 +120,17 @@ export default defineComponent({
   line-height: 0;
 }
 :deep(.el-menu-item.is-active) {
-  background-color: var(--el-menu-hover-background-color) !important;
+  background-color: var(--el-menu-hover-bg-color) !important;
+}
+:deep(.el-menu--horizontal) {
+  border-bottom: none;
 }
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;
+  background-color: v-bind(bgColor);
+}
+.scrollbar-inner-mode {
+  height: 100%;
   background-color: v-bind(bgColor);
 }
 .scrollbar-wrap-class {

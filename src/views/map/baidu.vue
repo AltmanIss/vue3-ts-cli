@@ -1,9 +1,12 @@
 <template>
-  <div ref="container" :style="{ height: height + 'px', width: '100%' }"></div>
+  <div
+    ref="container"
+    :style="{'height': height + 'px', 'width': '100%'}"
+  ></div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@vue/runtime-core';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useCreateScript } from '@/hooks';
 
 const SCRIPT_URL =
@@ -15,7 +18,8 @@ export default defineComponent({
     const height = ref(0);
     const { createScriptPromise } = useCreateScript(SCRIPT_URL);
     const initMap = () => {
-      height.value = container.value?.parentElement?.getBoundingClientRect().height || 0;
+      height.value =
+        container.value?.parentElement?.getBoundingClientRect().height || 0;
       createScriptPromise.then(() => {
         const bMap = (window as any).BMap;
         const map = new bMap.Map(container.value);
@@ -27,6 +31,6 @@ export default defineComponent({
     };
     onMounted(initMap);
     return { container, height };
-  }
+  },
 });
 </script>

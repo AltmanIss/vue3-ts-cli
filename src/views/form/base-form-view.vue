@@ -1,13 +1,27 @@
 <template>
   <div class="main-container flex flex-direction">
-    <el-card :body-style="{ padding: '15px' }" shadow="hover">
+    <el-card
+      :body-style="{ padding: '15px' }"
+      shadow="hover"
+    >
       <el-link :underline="false">请填写会议基本信息</el-link>
     </el-card>
-    <el-card :body-style="{ padding: '10px' }" shadow="nerve" class="margin-top-xs flex-sub">
+    <el-card
+      :body-style="{ padding: '10px' }"
+      shadow="nerve"
+      class="margin-top-xs flex-sub"
+    >
       <div class="form-wrapper padding-top">
-        <BaseForm ref="baseForm" :form-items="formItems" :config="formConfig">
+        <BaseForm
+          ref="baseForm"
+          :form-items="formItems"
+          :config="formConfig"
+        >
           <template #extra>
-            <el-form-item label="与会人员：" class="form-item">
+            <el-form-item
+              label="与会人员："
+              class="form-item"
+            >
               <el-select
                 v-model="joinMemeber.value"
                 multiple
@@ -22,7 +36,10 @@
                 />
               </el-select>
             </el-form-item>
-            <el-form-item label="备注：" class="form-item">
+            <el-form-item
+              label="备注："
+              class="form-item"
+            >
               <el-input
                 v-model="remark.value"
                 placeholder="请输入备注信息（选填）"
@@ -33,9 +50,12 @@
             </el-form-item>
             <el-form-item>
               <div class="text-center">
-                <el-button type="primary" size="small" :loading="submitLoading" @click="submit"
-                  >提交</el-button
-                >
+                <el-button
+                  type="primary"
+                  size="small"
+                  :loading="submitLoading"
+                  @click="submit"
+                >提交</el-button>
               </div>
             </el-form-item>
           </template>
@@ -51,8 +71,8 @@ import { reactive, ref, shallowReactive } from 'vue';
 
 const formConfig = {
   labelWidth: 100,
-  size: 'small',
-  labelPosition: 'right'
+  size: 'default',
+  labelPosition: 'right',
 };
 const formItems = reactive([
   {
@@ -69,7 +89,7 @@ const formItems = reactive([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     label: '会议类型：',
@@ -80,19 +100,19 @@ const formItems = reactive([
     radioOptions: [
       {
         label: '普通',
-        value: 0
+        value: 0,
       },
       {
         label: '紧急',
-        value: 1
-      }
+        value: 1,
+      },
     ],
     onChange: (value = 0, assName = '') => {
       // const assObj = this.formItems.find(
       //   (it: any) => it.name === assName,
       // );
       // this.$set(assObj, "hidden", value === 1);
-    }
+    },
   },
   {
     label: '会议内容：',
@@ -108,7 +128,7 @@ const formItems = reactive([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     label: '起止时间：',
@@ -122,7 +142,7 @@ const formItems = reactive([
         return false;
       }
       return true;
-    }
+    },
   },
   {
     label: '起止地点：',
@@ -133,20 +153,20 @@ const formItems = reactive([
     selectOptions: [
       {
         label: '会议一室',
-        value: 1
+        value: 1,
       },
       {
         label: '会议二室',
-        value: 2
+        value: 2,
       },
       {
         label: '会议三室',
-        value: 3
+        value: 3,
       },
       {
         label: '会议四室',
-        value: 4
-      }
+        value: 4,
+      },
     ],
     validator: ({ value = '', placeholder = '' }) => {
       if (!value) {
@@ -154,33 +174,33 @@ const formItems = reactive([
         return false;
       }
       return true;
-    }
-  }
+    },
+  },
 ]);
 const joinMemeber = shallowReactive({
   value: '',
   options: [
     {
       label: '张三',
-      value: 'zhangsan'
+      value: 'zhangsan',
     },
     {
       label: '李四',
-      value: 'lisi'
+      value: 'lisi',
     },
     {
       label: '江小鱼',
-      value: 'jiangxiaoyu'
+      value: 'jiangxiaoyu',
     },
     {
       label: '花无缺',
-      value: 'huawuque'
+      value: 'huawuque',
     },
     {
       label: '燕南天',
-      value: 'yannantian'
-    }
-  ]
+      value: 'yannantian',
+    },
+  ],
 });
 const remark = ref('');
 const submitLoading = ref(false);

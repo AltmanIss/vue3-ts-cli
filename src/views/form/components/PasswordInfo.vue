@@ -24,14 +24,27 @@
         {{ '￥' + Number(accountInfo.money).toFixed(2) }}
       </span>
     </el-form-item>
-    <el-form-item label="支付密码" prop="payPassword">
-      <el-input v-model="passwordModel.payPassword" placeholder="请输入支付密码" />
+    <el-form-item
+      label="支付密码"
+      prop="payPassword"
+    >
+      <el-input
+        v-model="passwordModel.payPassword"
+        placeholder="请输入支付密码"
+      />
     </el-form-item>
     <div class="flex justify-end margin-tb">
-      <el-button size="small" type="warning" @click="preStep">上一步</el-button>
-      <el-button @click="nextStep" size="small" type="primary" :loading="loadingStatus"
-        >下一步</el-button
-      >
+      <el-button
+        size="small"
+        type="warning"
+        @click="preStep"
+      >上一步</el-button>
+      <el-button
+        @click="nextStep"
+        size="small"
+        type="primary"
+        :loading="loadingStatus"
+      >下一步</el-button>
     </div>
   </el-form>
 </template>
@@ -46,16 +59,18 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
   emits: ['pre-step', 'next-step'],
   setup(props, { emit }) {
     const passwordModel = reactive({
-      payPassword: ''
+      payPassword: '',
     });
     const passwordRule = {
-      payPassword: [{ required: true, message: '请输入支付密码', trigger: 'blur' }]
+      payPassword: [
+        { required: true, message: '请输入支付密码', trigger: 'blur' },
+      ],
     };
     const loadingStatus = ref(false);
     const stepTwoForm = ref<typeof ElForm>();
@@ -81,9 +96,9 @@ export default defineComponent({
       passwordRule,
       loadingStatus,
       preStep,
-      nextStep
+      nextStep,
     };
-  }
+  },
 });
 </script>
 

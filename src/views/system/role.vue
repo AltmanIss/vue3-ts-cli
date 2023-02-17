@@ -8,7 +8,11 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="small" icon="PlusIcon" @click="onAddItem"
+            <el-button
+              type="primary"
+              size="small"
+              icon="PlusIcon"
+              @click="onAddItem"
               >添加
             </el-button>
           </template>
@@ -50,7 +54,11 @@
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
-              <el-button plain type="warning" size="small" @click="showMenu(scope.row)"
+              <el-button
+                plain
+                type="warning"
+                size="small"
+                @click="showMenu(scope.row)"
                 >菜单权限</el-button
               >
             </template>
@@ -60,7 +68,11 @@
     </TableBody>
     <Dialog ref="dialogRef">
       <template #content>
-        <BaseForm ref="baseFormRef" :form-items="formItems" />
+        <BaseForm
+          class="padding-left padding-right"
+          ref="baseFormRef"
+          :form-items="formItems"
+        />
       </template>
     </Dialog>
     <Dialog ref="menuDialogRef" title="菜单权限">
@@ -81,23 +93,29 @@
 
 <script lang="ts" setup>
 import type { DialogType } from '@/components/types';
-import { nextTick, onMounted, reactive, ref, shallowReactive } from 'vue';
+import { nextTick, onMounted, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { usePost } from '@/hooks';
-import { getAllMenuByRoleId, getMenuListByRoleId, getRoleList } from '@/api/url';
+import {
+  getAllMenuByRoleId,
+  getMenuListByRoleId,
+  getRoleList,
+} from '@/api/url';
 import { useDataTable } from '@/hooks';
 import { Plus } from '@element-plus/icons';
+import { IDataTable } from '@/hooks/DataTable';
+
 const ROLE_CODE_FLAG = 'ROLE_';
 const roleModel = reactive({
   id: 0,
   name: '',
   roleCode: '',
   description: '',
-  createTime: ''
+  createTime: '',
 });
 const defaultProps = {
   children: 'children',
-  label: 'menuName'
+  label: 'menuName',
 };
 const defaultCheckedKeys = ref<string[]>([]);
 const defaultExpandedKeys = ref<string[]>([]);
@@ -119,7 +137,7 @@ const formItems = reactive([
     },
     reset() {
       this.value = '';
-    }
+    },
   },
   {
     label: '角色编号',
@@ -138,7 +156,7 @@ const formItems = reactive([
     },
     reset() {
       this.value = '';
-    }
+    },
   },
   {
     label: '角色描述',
@@ -157,28 +175,36 @@ const formItems = reactive([
     },
     reset() {
       this.value = '';
-    }
-  }
+    },
+  },
 ]);
 const menuDialogRef = ref<DialogType>();
 const dialogRef = ref<DialogType>();
 const baseFormRef = ref();
 const tree = ref();
 const post = usePost();
-const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
-const allMenuList = ref([]);
+const {
+  handleSuccess,
+  dataList,
+  tableLoading,
+  tableConfig,
+}: IDataTable<RoleModelType> = useDataTable();
+
+const allMenuList = ref<Array<any>>([]);
 function doRefresh() {
-  post({
+  post<Array<RoleModelType>>({
     url: getRoleList,
-    data: {}
+    data: {},
   })
-    .then(handleSuccess)
+    .then((res) => {
+      handleSuccess(res);
+    })
     .catch(console.log);
 }
 
 function getAllMenuList() {
-  post({
-    url: getAllMenuByRoleId
+  post<Array<any>>({
+    url: getAllMenuByRoleId,
   }).then((res) => {
     allMenuList.value = res.data;
   });
@@ -187,17 +213,18 @@ function getAllMenuList() {
 function showMenu(item: RoleModel) {
   defaultCheckedKeys.value = [];
   defaultExpandedKeys.value = [];
-  post({
+  post<Array<any>>({
     url: getMenuListByRoleId,
     data: {
-      roleId: item.id
-    }
+      roleId: item.id,
+    },
   })
     .then((res) => {
       handleRoleMenusSelected(res.data);
       menuDialogRef.value?.show(() => {
         ElMessage.success(
-          '模拟菜单修改成功，数据为：' + JSON.stringify(tree.value.getCheckedKeys())
+          '模拟菜单修改成功，数据为：' +
+            JSON.stringify(tree.value.getCheckedKeys())
         );
         menuDialogRef.value?.close();
       });
@@ -211,7 +238,8 @@ function onAddItem() {
   formItems.forEach((it: FormItem) => it.reset && it.reset());
   dialogRef.value?.show(() => {
     ElMessageBox.confirm(
-      '角色模拟添加成功，参数为：' + JSON.stringify(baseFormRef.value?.generatorParams())
+      '角色模拟添加成功，参数为：' +
+        JSON.stringify(baseFormRef.value?.generatorParams())
     );
     dialogRef.value?.close();
   });
@@ -228,20 +256,23 @@ function onUpdateItem(item: RoleModel) {
   });
   dialogRef.value?.show(() => {
     ElMessageBox.confirm(
-      '角色模拟修改成功，参数为：' + JSON.stringify(baseFormRef.value?.generatorParams())
+      '角色模拟修改成功，参数为：' +
+        JSON.stringify(baseFormRef.value?.generatorParams())
     );
     dialogRef.value?.close();
   });
 }
 function onDeleteItem(item: RoleModel) {
-  ElMessageBox.confirm('是否要删除此信息，删除后不可恢复？', '提示').then(() => {
-    ElMessageBox.confirm(
-      '角色模拟删除成功，参数为：' +
-        JSON.stringify({
-          id: item.id
-        })
-    );
-  });
+  ElMessageBox.confirm('是否要删除此信息，删除后不可恢复？', '提示').then(
+    () => {
+      ElMessageBox.confirm(
+        '角色模拟删除成功，参数为：' +
+          JSON.stringify({
+            id: item.id,
+          })
+      );
+    }
+  );
 }
 function handleRoleMenusSelected(menus: Array<any>) {
   menus.forEach((it: any) => {

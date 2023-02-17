@@ -2,26 +2,60 @@
   <div class="main-container">
     <TableHeader>
       <template v-slot:right>
-        <el-button type="primary" size="mini" @click="exportExcel">导出Excel </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          @click="exportExcel"
+        >导出Excel
+        </el-button>
       </template>
     </TableHeader>
     <TableBody ref="tableBody">
       <template #default>
-        <el-table ref="table" :data="dataList">
-          <el-table-column align="center" label="序号" width="80">
+        <el-table
+          ref="table"
+          :data="dataList"
+        >
+          <el-table-column
+            align="center"
+            label="序号"
+            width="80"
+          >
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="名称" prop="nickName" />
-          <el-table-column align="center" label="性别" prop="gender">
+          <el-table-column
+            align="center"
+            label="名称"
+            prop="nickName"
+          />
+          <el-table-column
+            align="center"
+            label="性别"
+            prop="gender"
+          >
             <template v-slot="scope">
               <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="地址" prop="address" />
-          <el-table-column align="center" label="上次登录时间" prop="lastLoginTime" width="160px" />
-          <el-table-column align="center" label="上次登录IP" prop="lastLoginIp" width="130px" />
+          <el-table-column
+            align="center"
+            label="地址"
+            prop="address"
+          />
+          <el-table-column
+            align="center"
+            label="上次登录时间"
+            prop="lastLoginTime"
+            width="160px"
+          />
+          <el-table-column
+            align="center"
+            label="上次登录IP"
+            prop="lastLoginIp"
+            width="130px"
+          />
         </el-table>
       </template>
     </TableBody>
@@ -41,8 +75,8 @@ function doRefresh() {
     url: getTableList,
     data: {
       page: 1,
-      pageSize: 20
-    }
+      pageSize: 20,
+    },
   })
     .then(handleSuccess)
     .catch(console.log);

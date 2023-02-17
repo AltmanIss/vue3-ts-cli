@@ -4,27 +4,27 @@
     :class="[state.isCollapse ? 'fold-close-status' : 'fold-open-status']"
     @click="toggleFold"
   >
-    <Fold />
+  <Fold />
   </el-icon>
 </template>
 
 <script lang="ts">
-import store from '../store';
-import { defineComponent } from 'vue';
-import { Fold } from '@element-plus/icons';
+import store from '../store'
+import { defineComponent } from 'vue'
+import { Fold } from '@element-plus/icons'
 export default defineComponent({
   name: 'Humburger',
-  components: { Fold },
+  components: {Fold},
   setup() {
     function toggleFold() {
-      store.toggleCollapse(!store.state.isCollapse);
+      store.toggleCollapse(!store.state.isCollapse)
     }
     return {
       state: store.state,
       toggleFold
-    };
+    }
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

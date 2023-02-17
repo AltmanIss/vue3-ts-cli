@@ -1,13 +1,9 @@
 <template>
   <div class="vaw-tab-bar-container">
-    <div v-if="showHumburger" class="humburger-wrapper">
-      <Humburger />
-    </div>
     <el-tabs
       id="tagViewTab"
       v-model="currentTab"
       type="card"
-      :class="[showHumburger ? 'tab-humburger-wrapper' : 'tab-no-humburger-wrapper']"
       @tab-click="clickTab"
       @tab-remove="removeTab"
       @contextmenu.prevent="onContextMenu(currentTab, $event)"
@@ -20,24 +16,41 @@
         :closable="!isAffix(item)"
       />
     </el-tabs>
-    <ul v-show="showContextMenu" class="contex-menu-wrapper" :style="contextMenuStyle">
+    <ul
+      v-show="showContextMenu"
+      class="contex-menu-wrapper"
+      :style="contextMenuStyle"
+    >
       <li>
-        <el-button icon="RefreshIcon" :underline="false" type="text" @click="refreshRoute"
-          >刷新页面</el-button
-        >
+        <el-button
+          icon="RefreshIcon"
+          :underline="false"
+          type="text"
+          @click="refreshRoute"
+        >刷新页面</el-button>
       </li>
       <li :disabled="showLeftMenu">
-        <el-button :disabled="showLeftMenu" icon="BackIcon" type="text" @click="closeLeft"
-          >关闭左侧</el-button
-        >
+        <el-button
+          :disabled="showLeftMenu"
+          icon="BackIcon"
+          type="text"
+          @click="closeLeft"
+        >关闭左侧</el-button>
       </li>
       <li :disabled="showRightMenu">
-        <el-button :disabled="showRightMenu" icon="RightIcon" type="text" @click="closeRight"
-          >关闭右侧</el-button
-        >
+        <el-button
+          :disabled="showRightMenu"
+          icon="RightIcon"
+          type="text"
+          @click="closeRight"
+        >关闭右侧</el-button>
       </li>
       <li>
-        <el-button icon="CircleCloseIcon" type="text" @click="closeAll">关闭所有</el-button>
+        <el-button
+          icon="CircleCloseIcon"
+          type="text"
+          @click="closeAll"
+        >关闭所有</el-button>
       </li>
     </ul>
   </div>
@@ -49,29 +62,23 @@ import path from 'path';
 import qs from 'qs';
 export default {
   name: 'TabBar',
-  props: {
-    showHumburger: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       currentTab: this.$route.fullPath,
       contextMenuStyle: {
         left: 0,
-        top: 0
+        top: 0,
       },
       showContextMenu: false,
       selectRoute: null,
       showLeftMenu: true,
       showRightMenu: true,
-      state: store.state
+      state: store.state,
     };
   },
   watch: {
     $route(newVal) {
-      if (['404', '500', '403', 'not-found', 'Login'].includes(newVal.name)) {
+      if (['404', '500', '403', 'not-found', 'Login'].includes(newVal.name) || newVal.path === '/404') {
         this.currentTab = '';
         return;
       }
@@ -92,18 +99,23 @@ export default {
       } else {
         document.body.removeEventListener('click', this.closeMenu);
       }
-    }
+    },
   },
   mounted() {
     this.initRoute();
   },
   methods: {
     initRoute() {
-      const affixedRoutes = this.findAffixedRoutes(this.state.permissionRoutes, '/');
+      const affixedRoutes = this.findAffixedRoutes(
+        this.state.permissionRoutes,
+        '/'
+      );
       affixedRoutes.forEach((it) => {
         store.addVisitedView(it);
       });
-      if (['404', '500', '403', 'not-found', 'Login'].includes(this.$route.name)) {
+      if (
+        ['404', '500', '403', 'not-found', 'Login'].includes(this.$route.name)
+      ) {
         this.currentTab = '';
         return;
       }
@@ -123,11 +135,16 @@ export default {
             name: it.name,
             fullPath: path.resolve(basePath, it.path),
             path: it.path,
-            meta: it.meta
+            meta: it.meta,
           });
         }
         if (it.children && it.children.length > 0) {
-          temp.push(...this.findAffixedRoutes(it.children, path.resolve(basePath, it.path)));
+          temp.push(
+            ...this.findAffixedRoutes(
+              it.children,
+              path.resolve(basePath, it.path)
+            )
+          );
         }
       });
       return temp;
@@ -150,7 +167,9 @@ export default {
       }
       this.selectRoute = null;
       this.selectRoute = this.state.visitedView.find((it) => {
-        const { x, width } = document.getElementById('tab-' + it.fullPath).getBoundingClientRect();
+        const { x, width } = document
+          .getElementById('tab-' + it.fullPath)
+          .getBoundingClientRect();
         if (x < clientX && clientX < x + width) {
           return it;
         }
@@ -160,7 +179,9 @@ export default {
         this.showRightMenu = this.isRightLast(this.selectRoute);
         const screenWidth = document.body.clientWidth;
         this.contextMenuStyle.left =
-          (clientX + 130 > screenWidth ? clientX - 130 - x - 15 : clientX - x + 15) + 'px';
+          (clientX + 130 > screenWidth
+            ? clientX - 130 - x - 15
+            : clientX - x + 15) + 'px';
         this.contextMenuStyle.top = '15px';
         this.showContextMenu = true;
       }
@@ -170,11 +191,16 @@ export default {
       this.$router.push({ path: route.props.name, query: qs.parse(query) });
     },
     removeTab(name) {
-      const findItem = this.state.visitedView.find((it) => it.fullPath === name);
+      const findItem = this.state.visitedView.find(
+        (it) => it.fullPath === name
+      );
       if (findItem) {
         store.removeVisitedView(findItem).then((_) => {
           if (this.currentTab === name) {
-            this.currentTab = this.state.visitedView[this.state.visitedView.length - 1].fullPath;
+            this.currentTab =
+              this.state.visitedView[
+                this.state.visitedView.length - 1
+              ].fullPath;
             this.$router.push(this.currentTab);
           }
         });
@@ -185,7 +211,10 @@ export default {
       return this.state.visitedView.indexOf(tempRoute) === 0;
     },
     isRightLast(tempRoute) {
-      return this.state.visitedView.indexOf(tempRoute) === this.state.visitedView.length - 1;
+      return (
+        this.state.visitedView.indexOf(tempRoute) ===
+        this.state.visitedView.length - 1
+      );
     },
     refreshRoute() {
       this.$router.replace({ path: '/redirect' + this.$route.path });
@@ -193,31 +222,37 @@ export default {
     closeLeft() {
       store.closeLeftVisitedView(this.selectRoute).then((_) => {
         if (this.$route.fullPath !== this.selectRoute.fullPath) {
-          this.$router.push(this.state.visitedView[this.state.visitedView.length - 1].fullPath);
+          this.$router.push(
+            this.state.visitedView[this.state.visitedView.length - 1].fullPath
+          );
         }
       });
     },
     closeRight() {
       store.closeRightVisitedView(this.selectRoute).then((_) => {
         if (this.$route.fullPath !== this.selectRoute.fullPath) {
-          this.$router.push(this.state.visitedView[this.state.visitedView.length - 1].fullPath);
+          this.$router.push(
+            this.state.visitedView[this.state.visitedView.length - 1].fullPath
+          );
         }
       });
     },
     closeAll() {
       store.closeAllVisitedView(this.selectRoute).then((_) => {
-        this.$router.push(this.state.visitedView[this.state.visitedView.length - 1].fullPath);
+        this.$router.push(
+          this.state.visitedView[this.state.visitedView.length - 1].fullPath
+        );
       });
     },
     closeMenu() {
       this.showContextMenu = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .vaw-tab-bar-container {
   position: relative;
   height: $tabHeight;

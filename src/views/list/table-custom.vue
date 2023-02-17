@@ -9,8 +9,12 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="small" icon="PlusIcon">添加 </el-button>
-            <el-button type="danger" size="small" icon="DeleteIcon">删除 </el-button>
+            <el-button type="primary" size="small" icon="PlusIcon"
+              >添加
+            </el-button>
+            <el-button type="danger" size="small" icon="DeleteIcon"
+              >删除
+            </el-button>
           </template>
         </TableConfig>
       </template>
@@ -50,7 +54,7 @@
                       : require('@/assets/icon_sex_woman.png')
                   "
                 />
-                <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
+                <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
               <div v-else-if="item.prop === 'vip'" class="avatar-container">
                 <el-image
@@ -69,13 +73,19 @@
           </el-table-column>
           <el-table-column align="center" label="操作">
             <template v-slot="scope">
-              <el-button type="text" @click="onDeleteItem(scope.row)">删除</el-button>
+              <el-button type="text" @click="onDeleteItem(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
       </template>
       <template #footer>
-        <TableFooter ref="tableFooter" @refresh="doRefresh" @pageChanged="doRefresh" />
+        <TableFooter
+          ref="tableFooter"
+          @refresh="doRefresh"
+          @pageChanged="doRefresh"
+        />
       </template>
     </TableBody>
   </div>
@@ -85,35 +95,41 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import { showConfirmBox, showErrorMessage } from '@/components/types';
 import { useDataTable, usePost } from '@/hooks';
-import { getTableList } from '@/api/url';
+import { getTableList, getUserList } from '@/api/url';
 import type { TableFooter } from '@/components/types';
 import _ from 'lodash';
 
-const { handleSuccess, selectRows, dataList, tableConfig, tableLoading, handleSelectionChange } =
-  useDataTable();
+const {
+  handleSuccess,
+  selectRows,
+  dataList,
+  tableConfig,
+  tableLoading,
+  handleSelectionChange,
+} = useDataTable();
 const post = usePost();
 
 const tableProps = ref([
   {
     title: '姓名',
     prop: 'nickName',
-    checked: true
+    checked: true,
   },
   {
     title: '头像',
     prop: 'vip',
-    checked: true
+    checked: true,
   },
   {
     title: '性别',
     prop: 'gender',
-    checked: true
+    checked: true,
   },
   {
     title: '地址',
     prop: 'address',
-    checked: true
-  }
+    checked: true,
+  },
 ]);
 const userModel = reactive({
   address: '',
@@ -124,13 +140,13 @@ const userModel = reactive({
   lastLoginTime: '',
   nickName: '',
   status: 0,
-  vip: 1
+  vip: 1,
 });
 const tableFooter = ref<TableFooter>();
 function doRefresh() {
   post({
-    url: getTableList,
-    data: tableFooter.value?.withPageInfoData()
+    url: getUserList,
+    data: tableFooter.value?.withPageInfoData(),
   })
     .then(handleSuccess)
     .then((res: any) => {
@@ -149,7 +165,7 @@ function onDeleteItem(item: any) {
         showConfirmBox(
           '模拟删除成功，参数为：' +
             JSON.stringify({
-              ids: selectRows.map((it: any) => it.id).join(',')
+              ids: selectRows.map((it: any) => it.id).join(','),
             })
         );
       });

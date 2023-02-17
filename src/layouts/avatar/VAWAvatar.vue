@@ -14,8 +14,12 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :icon="UserIcon" @click="onPersonalCenter">个人中心</el-dropdown-item>
-          <el-dropdown-item :icon="SwitchButton" @click="onLogout">退出登录</el-dropdown-item>
+          <el-dropdown-item :icon="UserIcon" @click="onPersonalCenter"
+            >个人中心</el-dropdown-item
+          >
+          <el-dropdown-item :icon="SwitchButton" @click="onLogout"
+            >退出登录</el-dropdown-item
+          >
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -33,7 +37,8 @@ export default defineComponent({
   setup() {
     const useStore = useUserStore();
     function onPersonalCenter() {
-      (layoutStore as any).onPersonalCenter && (layoutStore as any).onPersonalCenter();
+      (layoutStore as any).onPersonalCenter &&
+        (layoutStore as any).onPersonalCenter();
     }
     function onLogout() {
       ElMessageBox({
@@ -42,7 +47,7 @@ export default defineComponent({
         type: 'warning',
         confirmButtonText: '退出',
         cancelButtonText: '取消',
-        showCancelButton: true
+        showCancelButton: true,
       }).then(() => {
         useStore.logout().then(() => {
           (layoutStore as any).onLogout && (layoutStore as any).onLogout();
@@ -54,14 +59,14 @@ export default defineComponent({
       onPersonalCenter,
       onLogout,
       UserIcon,
-      SwitchButton
+      SwitchButton,
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 :deep(.el-dropdown) {
   color: currentColor !important;
 }

@@ -1,26 +1,54 @@
-import { nextTick, reactive, ref, shallowReactive } from 'vue';
+import { nextTick, reactive, Ref, ref } from 'vue';
 import useEmit from './Emit';
 
-export default function (): Record<string, any> {
-  const dataList = shallowReactive([]) as Array<any>;
-  const selectRows = ref<Array<any>>([]);
+export interface IDataTable<T = any> {
+  dataList: Ref<T[] | undefined>;
+  selectRows: Ref<T[] | undefined>;
+  tableConfig: {
+    stripe: boolean;
+    border: boolean;
+    size: string;
+    headerCellStyle: any;
+    height: number;
+  };
+  tableLoading: Ref<boolean>;
+  handleSuccess: ({
+    data,
+    totalSize,
+  }: {
+    data: T[];
+    totalSize?: number;
+  }) => Promise<{ data: T[] }>;
+  handleSelectionChange: (tempSelectRows: T[]) => void;
+  [key: string]: any;
+}
+
+export default function <T = any>(): IDataTable<T> {
+  const dataList = ref<T[]>();
+  const selectRows = ref<T[]>();
+  selectRows.value = [];
   const tableConfig = reactive({
     stripe: true,
     border: false,
-    size: 'small',
+    size: 'default',
     headerCellStyle: {
-      color: '#333'
+      color: '#333',
     },
-    height: 200
+    height: 200,
   });
   const tableLoading = ref(true);
-  const handleSuccess = ({ data = [], totalSize = 10 }) => {
-    dataList.length = 0;
-    dataList.push(...data);
+  const handleSuccess = ({
+    data = [],
+    totalSize = 10,
+  }: {
+    data: T[];
+    totalSize?: number;
+  }) => {
+    dataList.value = data;
     tableLoading.value = false;
     return Promise.resolve({ data, totalSize });
   };
-  const handleSelectionChange = (tempSelectRows: Array<any>) => {
+  const handleSelectionChange = (tempSelectRows: T[]) => {
     selectRows.value = tempSelectRows;
   };
   const pageChanged = () => {
@@ -35,7 +63,7 @@ export default function (): Record<string, any> {
       nextTick(() => {
         let height = 0;
         const mainEl = document.querySelector('.main-base-style');
-        height = (mainEl?.clientHeight || 0) - 47;
+        height = (mainEl?.clientHeight || 0) - 39;
         const footerEl = document.querySelector('.footer-wrapper');
         const tableHeaderEl = document.getElementById('tableHeaderContainer');
         const tableConigEl = document.getElementById('tableConfigContainer');
@@ -77,8 +105,7 @@ export default function (): Record<string, any> {
     tableLoading,
     handleSuccess,
     handleSelectionChange,
-    doRefresh,
+    offTableCollapseTransition,
     useHeight,
-    offTableCollapseTransition
   };
 }

@@ -1,20 +1,36 @@
 <template>
-  <el-skeleton :loading="loading" animated>
+  <el-skeleton
+    :loading="loading"
+    animated
+  >
     <template #template>
       <div>
         <el-skeleton-item variant="text" />
-        <el-skeleton-item variant="text" class="margin-top" />
+        <el-skeleton-item
+          variant="text"
+          class="margin-top"
+        />
       </div>
     </template>
     <template #default>
-      <div ref="orderChartWrapper" style="height: 100%; width: 100%"></div>
+      <div
+        ref="orderChartWrapper"
+        style="height: 100%; width: 100%"
+      >
+      </div>
     </template>
   </el-skeleton>
 </template>
 
 <script lang="ts">
 import useEcharts from '@/hooks/Echarts';
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from '@vue/runtime-core';
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 import { dispose, graphic } from 'echarts';
 
 export default defineComponent({
@@ -29,25 +45,25 @@ export default defineComponent({
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#6a7985'
-            }
-          }
+              backgroundColor: '#6a7985',
+            },
+          },
         },
         grid: {
           x: '-5%',
           y: 0,
           x2: '-5%',
-          y2: 0
+          y2: 0,
         },
         xAxis: {
           type: 'category',
-          splitLine: { show: false }
+          splitLine: { show: false },
         },
         yAxis: [
           {
             type: 'value',
-            splitLine: { show: false }
-          }
+            splitLine: { show: false },
+          },
         ],
         series: [
           {
@@ -55,7 +71,7 @@ export default defineComponent({
             type: 'line',
             smooth: true,
             lineStyle: {
-              width: 0
+              width: 0,
             },
             showSymbol: false,
             areaStyle: {
@@ -63,21 +79,23 @@ export default defineComponent({
               color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: 'rgba(128, 255, 165)'
+                  color: 'rgba(128, 255, 165)',
                 },
                 {
                   offset: 1,
-                  color: 'rgba(1, 191, 236)'
-                }
-              ])
-            }
-          }
-        ]
+                  color: 'rgba(1, 191, 236)',
+                },
+              ]),
+            },
+          },
+        ],
       };
       setTimeout(() => {
         loading.value = false;
         nextTick(() => {
-          useEcharts(orderChartWrapper.value as HTMLDivElement).setOption(option);
+          useEcharts(orderChartWrapper.value as HTMLDivElement).setOption(
+            option
+          );
         });
       }, 100);
     };
@@ -85,14 +103,11 @@ export default defineComponent({
       useEcharts(orderChartWrapper.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(orderChartWrapper.value as HTMLDivElement);
-    });
     return {
       loading,
       orderChartWrapper,
-      updateChart
+      updateChart,
     };
-  }
+  },
 });
 </script>

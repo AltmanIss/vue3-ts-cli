@@ -1,12 +1,20 @@
 <template>
   <el-card>
     <el-row class="icon-parent">
-      <el-col :xs="6" :md="3" :sm="3" :lg="3" :xl="3" v-for="item of iconArray" :key="item">
+      <el-col
+        :xs="6"
+        :md="3"
+        :sm="3"
+        :lg="3"
+        :xl="3"
+        v-for="item of iconArray"
+        :key="item"
+      >
         <div class="icon-wrapper flex flex-direction justify-center align-center">
           <el-icon size="20">
             <component :is="item + 'Icon'" />
           </el-icon>
-          <div class="text-xs margin-top text-center">{{ item }}</div>
+          <div class="text-xs margin-top text-center">{{item}}</div>
           <div
             :id="item"
             class="copy text-center"
@@ -33,13 +41,13 @@ export default defineComponent({
     const loading = ref(false);
     const iconArray = Object.keys(ElIcons);
     const onCopy = (item: string) => {
-      const clip = new clipboard('#' + item);
+      const clip = new clipboard('#' + item)
       clip.on('success', () => {
         ElMessage.success('复制成功');
-      });
+      })
     };
     function getClipboardText(item: string) {
-      return `<el-icon><${item}Icon/></el-icon>`;
+      return `<el-icon><${item}Icon/></el-icon>`
     }
     return {
       loading,
@@ -47,7 +55,7 @@ export default defineComponent({
       onCopy,
       getClipboardText
     };
-  }
+  },
 });
 </script>
 

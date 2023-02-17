@@ -5,6 +5,7 @@
     :full-path="fullPath"
     :item="item"
     :show-route="showRoute"
+    @top-item-click="topItemClick"
   >
     <template v-if="item.children && item.children.length !== 0">
       <SideBarItem
@@ -22,23 +23,24 @@ import path from 'path';
 import MenuItem from './MenuItem.vue';
 import SubMenuItem from './SubMenuItem.vue';
 import { isExternal } from '../../utils';
-import { defineComponent, computed, reactive, ref } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 export default defineComponent({
   name: 'SideBarItem',
   components: { MenuItem, SubMenuItem },
   props: {
     fullPath: {
       type: String,
-      default: ''
+      default: '',
     },
     item: {
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
-  setup(props) {
+  emits: ['top-item-click'],
+  setup(props, { emit }) {
     const showRoute = ref({});
     function isSubMenu() {
       const tempShowRoutes = props.item.children
@@ -51,14 +53,18 @@ export default defineComponent({
             }
           })
         : [];
-      if (tempShowRoutes.length === 1) {
+      if (
+        props.item.meta &&
+        props.item.meta.isSingle &&
+        tempShowRoutes.length === 1
+      ) {
         return false;
       }
       if (tempShowRoutes.length === 0) {
         showRoute.value = {
           ...props.item,
           path: '',
-          noChildren: true
+          noChildren: true,
         };
         return false;
       }
@@ -79,12 +85,16 @@ export default defineComponent({
       }
       return 'MenuItem';
     });
+    function topItemClick(item: any) {
+      emit('top-item-click', item);
+    }
     return {
       showRoute,
       generatorPath,
       isSubMenu,
-      sideBarComponent
+      sideBarComponent,
+      topItemClick,
     };
-  }
+  },
 });
 </script>

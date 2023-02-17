@@ -1,8 +1,15 @@
 <template>
   <router-view v-slot="{ Component }">
-    <transition name="fade-transform" mode="out-in" appear>
+    <transition
+      name="fade-transform"
+      mode="out-in"
+      appear
+    >
       <keep-alive :include="cachedViews">
-        <component :is="Component" :key="routeKey" />
+        <component
+          :is="Component"
+          :key="routeKey"
+        />
       </keep-alive>
     </transition>
   </router-view>
@@ -30,8 +37,8 @@ export default defineComponent({
     return {
       state,
       cachedViews,
-      routeKey
+      routeKey,
     };
-  }
+  },
 });
 </script>

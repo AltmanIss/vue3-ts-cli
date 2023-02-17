@@ -1,16 +1,31 @@
 <template>
-  <div class="style-example-container" :class="{ 'circle-tip': checked }">
-    <div class="left" :style="{ 'background-color': leftBg }"></div>
+  <div
+    class="style-example-container"
+    :class="{ 'circle-tip': checked }"
+  >
+    <div
+      class="left"
+      :style="{'background-color': leftBg}"
+    ></div>
     <div class="right">
-      <div class="right-top" :style="{ 'background-color': rightTopBg }"></div>
-      <div class="right-bottom" :style="{ 'background-color': rightBottomBg }"></div>
+      <div
+        class="right-top"
+        :style="{'background-color': rightTopBg}"
+      ></div>
+      <div
+        class="right-bottom"
+        :style="{'background-color': rightBottomBg}"
+      ></div>
     </div>
-    <div v-if="tipText" style="font-size: 12px; text-align: center">{{ tipText }}</div>
+    <div
+      v-if="tipText"
+      style="font-size: 12px; text-align: center"
+    >{{ tipText }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'StyleExample',
   props: {
@@ -35,7 +50,7 @@ export default defineComponent({
       default: null
     }
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

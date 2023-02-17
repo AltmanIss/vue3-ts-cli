@@ -1,12 +1,9 @@
 <template>
   <div
-    class="vaw-side-bar-wrapper"
+    class="vaw-inner-side-bar-wrapper"
     :class="[!state.isCollapse ? 'open-status' : 'close-status']"
   >
-    <transition name="logo">
-      <Logo v-if="showLogo" />
-    </transition>
-    <ScrollerMenu>
+    <ScrollerMenu :inner-mode="true">
       <template #default>
         <SideBarItem
           v-for="item of routes"
@@ -16,26 +13,38 @@
         />
       </template>
     </ScrollerMenu>
-    <div class="mobile-shadow"></div>
+    <div class="inner-humbuger">
+      <Humburger />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import store from '../store';
-import { defineComponent, computed } from 'vue';
+import { defineComponent, ref, watch, nextTick } from 'vue';
+import { RouteRecordRaw, useRoute, useRouter } from 'vue-router';
 export default defineComponent({
-  name: 'SideBar',
-  props: {
-    showLogo: {
-      type: Boolean,
-      default: true,
-    },
-  },
+  name: 'InnerSideBar',
   setup() {
     const state = store.state;
-    const routes = computed(() => {
-      return state.permissionRoutes.filter((it) => !!it.name);
-    });
+    const route = useRoute();
+    const router = useRouter();
+    const routes = ref<RouteRecordRaw[]>([]);
+    watch(
+      () => route.fullPath,
+      () => {
+        nextTick(() => {
+          const path = route.matched[0].path;
+          const tempRoutes = store.state.permissionRoutes.find(
+            (it) => it.path === path
+          );
+          routes.value = tempRoutes?.children || [];
+        });
+      },
+      {
+        immediate: true,
+      }
+    );
     return {
       state,
       routes,
@@ -56,33 +65,33 @@ export default defineComponent({
   box-shadow: none;
   transition: all $transitionTime;
 }
-.vaw-side-bar-wrapper {
-  position: fixed;
-  top: 0;
+.vaw-inner-side-bar-wrapper {
+  position: absolute;
+  top: $logoHeight;
   left: 0;
   overflow-x: hidden;
-  height: 100%;
+  bottom: 0;
   box-sizing: border-box;
   z-index: 99;
   .vaw-menu-wrapper {
     overflow-x: hidden;
     color: white;
   }
-  .scrollbar {
-    height: calc(100% - #{$logoHeight}) !important;
-  }
 }
-.is-mobile {
-  .open-status {
-    width: $menuWidth;
-    transform: translateX(0);
-    transition: transform $transitionTime;
-  }
-  .close-status {
-    width: $menuWidth;
-    transform: translateX(-$menuWidth);
-    transition: transform $transitionTime;
-    box-shadow: none;
+.inner-humbuger {
+  position: absolute;
+  right: 10px;
+  bottom: 5%;
+  width: 30px;
+  height: 30px;
+  background-color: var(--el-color-primary-light-5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  &:hover {
+    color: #fff;
   }
 }
 </style>

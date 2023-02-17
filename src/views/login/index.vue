@@ -5,25 +5,45 @@
       <div class="content">
         <img :src="logo" />
         <div class="proj-name">{{ projectName }}</div>
-        <div class="desc">一些文字介绍</div>
+        <div class="desc">y一些介绍</div>
         <div class="ttiipp">毫厘行万里 逐岁廪禾多</div>
         <div class="bottom">{{ projectName + '    ' + version }} · 基础技术</div>
       </div>
     </div>
     <div class="right">
       <el-card class="form-wrapper">
-        <div class="title">账号登录</div>
+        <div class="title padding-bottom">欢迎使用{{projectName}}</div>
+        <div class="margin-top-lg">
+          <div class="margin-bottom-sm tips">推荐使用飞书登陆</div>
+          <el-button @click="onLarkLogin" class="login">
+            <img src="@/assets/lark.png" class="lark" />飞书登陆
+          </el-button>
+        </div>
+        <div class="thirdLine padding-top padding-bottom-lg margin-top margin-bottom-lg">
+          <span class="line"></span>
+          <div class="txt">
+            <span>or</span>
+          </div>
+          <span class="line"></span>
+        </div>
         <div class="item-wrapper">
-          <el-input v-model="username" placeholder="请输入用户名/手机号" clearable>
+          <el-input v-model="username" placeholder="请输入用户名" clearable>
             <template #prefix>
               <el-icon class="el-input__icon">
-                <IphoneIcon />
+                <UserIcon />
               </el-icon>
             </template>
           </el-input>
         </div>
         <div class="item-wrapper margin-top-lg">
-          <el-input v-model="password" placeholder="请输入密码" type="password" clearable>
+          <el-input
+            v-model="password"
+            placeholder="请输入密码"
+            type="password"
+            clearable
+            @keyup.enter="onLogin"
+            show-password
+          >
             <template #prefix>
               <el-icon class="el-input__icon">
                 <LockIcon />
@@ -36,12 +56,6 @@
           <el-button type="primary" class="login" :loading="loading" @click="onLogin">
             登录
           </el-button>
-        </div>
-        <div class="my-width flex-sub margin-top">
-          <div class="flex justify-between">
-            <el-checkbox v-model="autoLogin">自动登录</el-checkbox>
-            <el-link :underline="false" type="primary">忘记密码？</el-link>
-          </div>
         </div>
       </el-card>
     </div>
@@ -78,14 +92,16 @@ export default defineComponent({
         url: login,
         data: {
           username: username.value,
-          password: password.value
-        }
+          password: password.value,
+        },
       })
         .then(({ data }: Response) => {
           userStore.saveUser(data as UserState).then(() => {
             router
               .replace({
-                path: route.query.redirect ? (route.query.redirect as string) : '/'
+                path: route.query.redirect
+                  ? (route.query.redirect as string)
+                  : '/',
               })
               .then(() => {
                 loading.value = false;
@@ -97,6 +113,9 @@ export default defineComponent({
           ElMessage.error(error.message);
         });
     };
+    const onLarkLogin = () => {
+      // feishu
+    }
     return {
       projectName,
       version,
@@ -106,9 +125,10 @@ export default defineComponent({
       loading,
       onLogin,
       ImageBg1,
-      logo
+      logo,
+      onLarkLogin
     };
-  }
+  },
 });
 </script>
 
@@ -206,15 +226,44 @@ $leftWith: 35%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     .form-wrapper {
       width: 50%;
       .title {
         font-size: 25px;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
       }
       .login {
         width: 100%;
+      }
+      .tips {
+        color: var(--el-color-primary);
+      }
+      .lark {
+        height: 20px;
+        width: 20px;
+      }
+      .thirdLine {
+        height: 50px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .line {
+          display: inline-block;
+          width: 50%;
+          height: 1px;
+          background: #e4e7ed;
+        }
+        .txt {
+          color: #bbbbbb;
+          vertical-align: middle;
+          display: flex;
+          flex-direction: column;
+          font-size: 12px;
+          margin: 0 15px;
+        }
       }
     }
   }

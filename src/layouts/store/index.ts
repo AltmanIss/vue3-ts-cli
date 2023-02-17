@@ -4,6 +4,7 @@ import { Device, StoreState, UserInfo } from '../types.js';
 import { RouteRecordRaw } from 'vue-router';
 import { usePrimaryColor } from '../hooks';
 import defaultSetting from '../../setting';
+import { omit } from 'lodash';
 const layoutModes = ['ltr', 'lcr', 'ttb'];
 
 export default {
@@ -21,8 +22,8 @@ export default {
       showSearch: true,
       showMessage: true,
       showFullScreen: true,
-      showRefresh: true
-    })
+      showRefresh: true,
+    }),
   }),
   start(options: any) {
     this.saveSetting(defaultSetting);
@@ -57,15 +58,37 @@ export default {
   },
   getSplitTabs() {
     return this.state.permissionRoutes.filter((it) => {
-      return it.path && !(it as any).hidden && it.children && it.children.length > 0;
+      return (
+        it.path && !(it as any).hidden && it.children && it.children.length > 0
+      );
     });
+  },
+  getTopLevelItems() {
+    return this.state.permissionRoutes
+      .filter((it) => {
+        return (
+          it.path &&
+          !(it as any).hidden &&
+          it.children &&
+          it.children.length > 0
+        );
+      })
+      .map((it) => {
+        return {
+          isTopItem: true,
+          items: it.children,
+          ...omit(it, 'children'),
+        };
+      });
   },
   initPermissionRoute(routes: Array<RouteRecordRaw>) {
     this.state.permissionRoutes.length = 0;
     this.state.permissionRoutes.push(...routes);
   },
   isEmptyPermissionRoute() {
-    return !this.state.permissionRoutes || this.state.permissionRoutes.length === 0;
+    return (
+      !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
+    );
   },
   saveSetting(setting: any) {
     localStorage.setItem(
@@ -88,8 +111,8 @@ export default {
         showSearch: true,
         showMessage: true,
         showFullScreen: true,
-        showRefresh: true
-      })
+        showRefresh: true,
+      }),
     });
   },
   addCachedView(route: RouteRecordRaw) {
@@ -112,15 +135,19 @@ export default {
     this.state.cachedView.length = 0;
     this.state.cachedView.push(
       ...this.state.visitedView
-        .filter((it, _index) => {
+        .filter((it: RouteRecordRaw) => {
           return it.name && it.meta && it.meta.cacheable;
         })
-        .map((it) => toHump(it.name as string))
+        .map((it: RouteRecordRaw) => toHump(it.name as string))
     );
   },
   addVisitedView(route: any) {
     return new Promise<any>((resolve) => {
-      if (!this.state.visitedView.find((it: any) => it.fullPath === route.fullPath)) {
+      if (
+        !this.state.visitedView.find(
+          (it: any) => it.fullPath === route.fullPath
+        )
+      ) {
         this.state.visitedView.push(route);
         this.persistentVisitedView();
       }
@@ -140,9 +167,11 @@ export default {
     return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute);
       if (selectIndex !== -1) {
-        const tempList = this.state.visitedView.filter((it, index) => {
-          return (it.meta && it.meta.affix) || index >= selectIndex;
-        });
+        const tempList = this.state.visitedView.filter(
+          (it: RouteRecordRaw, index: number) => {
+            return (it.meta && it.meta.affix) || index >= selectIndex;
+          }
+        );
         this.state.visitedView.length = 0;
         this.state.visitedView.push(...tempList);
         this.persistentVisitedView();
@@ -155,9 +184,11 @@ export default {
     return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute);
       if (selectIndex !== -1) {
-        const tempList = this.state.visitedView.filter((it, index) => {
-          return (it.meta && it.meta.affix) || index <= selectIndex;
-        });
+        const tempList = this.state.visitedView.filter(
+          (it: RouteRecordRaw, index: number) => {
+            return (it.meta && it.meta.affix) || index <= selectIndex;
+          }
+        );
         this.state.visitedView.length = 0;
         this.state.visitedView.push(...tempList);
         this.persistentVisitedView();
@@ -168,17 +199,22 @@ export default {
   },
   closeAllVisitedView() {
     return new Promise<void>((resolve) => {
-      const tempList = this.state.visitedView.filter((it, _index) => {
-        return it.meta && it.meta.affix;
-      });
+      const tempList = this.state.visitedView.filter(
+        (it: RouteRecordRaw, _index: any) => {
+          return it.meta && it.meta.affix;
+        }
+      );
       this.state.visitedView.length = 0;
       this.state.visitedView.push(...tempList);
       this.persistentVisitedView();
       this.state.cachedView.length = 0;
       this.state.cachedView.push(
         ...this.state.visitedView
-          .filter((route) => route.name && route.meta && route.meta.cacheable)
-          .map((it) => toHump(it.name as string))
+          .filter(
+            (route: RouteRecordRaw) =>
+              route.name && route.meta && route.meta.cacheable
+          )
+          .map((it: RouteRecordRaw) => toHump(it.name as string))
       );
       resolve();
     });
@@ -191,7 +227,7 @@ export default {
         name: it.name,
         params: it.params,
         path: it.path,
-        query: it.query
+        query: it.query,
       };
     });
     localStorage.setItem('visited', JSON.stringify(tempPersistendRoutes));
@@ -203,11 +239,12 @@ export default {
     persistentVisitedRoutes.forEach((originRoute: any) => {
       if (
         !this.state.visitedView.find(
-          (it: any) => it.fullPath === originRoute.fullPath && it.name === originRoute.name
+          (it: any) =>
+            it.fullPath === originRoute.fullPath && it.name === originRoute.name
         )
       ) {
         this.state.visitedView.push(originRoute);
       }
     });
-  }
+  },
 };

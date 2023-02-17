@@ -1,13 +1,24 @@
 <template>
   <div class="action-items-wrapper">
-    <span v-if="state.actionItem.showSearch" class="action-item" @click="onShowSearch">
+    <span
+      v-if="state.actionItem.showSearch"
+      class="action-item"
+      @click="onShowSearch"
+    >
       <el-icon :size="18">
         <Search />
       </el-icon>
     </span>
-    <el-popover v-if="state.actionItem.showMessage" trigger="click" :width="300">
+    <el-popover
+      v-if="state.actionItem.showMessage"
+      trigger="click"
+      :width="300"
+    >
       <template #reference>
-        <el-badge :value="12" class="badge-action-item">
+        <el-badge
+          :value="12"
+          class="badge-action-item"
+        >
           <span>
             <el-icon :size="18">
               <bell />
@@ -17,7 +28,11 @@
       </template>
       <PopoverMessageContent />
     </el-popover>
-    <span v-if="state.actionItem.showRefresh" class="action-item" @click="onRefrehRoute">
+    <span
+      v-if="state.actionItem.showRefresh"
+      class="action-item"
+      @click="onRefrehRoute"
+    >
       <el-icon :size="18">
         <Refresh />
       </el-icon>
@@ -31,12 +46,16 @@
         <FullScreen />
       </el-icon>
     </span>
-    <span v-if="state.device !== 'mobile'" class="action-item" @click="onShowSetting">
+    <span
+      v-if="state.device !== 'mobile'"
+      class="action-item"
+      @click="onShowSetting"
+    >
       <el-icon :size="18">
         <SettingIcon />
       </el-icon>
     </span>
-    <div
+    <!-- <div
       v-if="state.actionItem.showSearch && state.device !== 'mobile'"
       class="input-wrapper"
       :class="{ 'is-active': showSearchContent }"
@@ -48,7 +67,7 @@
         clearable
         @change="onChange"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -56,7 +75,13 @@
 import screenfull from 'screenfull';
 import store from '../store';
 import { defineComponent, ref } from 'vue';
-import { Search, Bell, Refresh, FullScreen, Setting as SettingIcon } from '@element-plus/icons';
+import {
+  Search,
+  Bell,
+  Refresh,
+  FullScreen,
+  Setting as SettingIcon,
+} from '@element-plus/icons';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import useEmit from '@/hooks/Emit';
@@ -68,10 +93,10 @@ export default defineComponent({
     Bell,
     Refresh,
     FullScreen,
-    SettingIcon
+    SettingIcon,
   },
   setup() {
-    const searchContentRef = ref();
+    // const searchContentRef = ref();
     const showSearchContent = ref(false);
     const searchContent = ref('');
     const state = store.state;
@@ -82,11 +107,11 @@ export default defineComponent({
     function onShowSearch() {
       showSearchContent.value = !showSearchContent.value;
       searchContent.value = '';
-      if (showSearchContent.value) {
-        searchContentRef.value?.focus();
-      } else {
-        searchContentRef.value?.blur();
-      }
+      // if (showSearchContent.value) {
+      //   searchContentRef.value?.focus();
+      // } else {
+      //   searchContentRef.value?.blur();
+      // }
     }
     function onChange(content: string) {
       if (!content) {
@@ -108,7 +133,7 @@ export default defineComponent({
       emit?.emit('show_setting');
     }
     return {
-      searchContentRef,
+      // searchContentRef,
       showSearchContent,
       searchContent,
       state,
@@ -116,9 +141,9 @@ export default defineComponent({
       onShowSetting,
       onRefrehRoute,
       onScreenFull,
-      onChange
+      onChange,
     };
-  }
+  },
 });
 </script>
 

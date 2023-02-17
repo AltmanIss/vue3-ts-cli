@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-for="(item, index) of tempData" :key="index" class="message-item flex">
+    <div
+      v-for="(item, index) of tempData"
+      :key="index"
+      class="message-item flex"
+    >
       <div class="icon">
         <el-icon>
           <MessageIcon />
@@ -19,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowReactive, toRef } from '@vue/runtime-core';
+import { defineComponent, shallowReactive, toRef } from 'vue';
 import { showSuccessMessage } from '../types';
 
 export default defineComponent({
@@ -29,27 +33,27 @@ export default defineComponent({
       {
         icon: '',
         title: '计划审核通知',
-        subTitle: '上线计划已经审核通过，请立即准备上线事宜'
+        subTitle: '上线计划已经审核通过，请立即准备上线事宜',
       },
       {
         icon: '',
         title: '动态评论',
-        subTitle: '马小小：随便写的一些评论消息'
+        subTitle: '马小小：随便写的一些评论消息',
       },
       {
         icon: '',
         title: '任务消息',
-        subTitle: '下午来开会，快点，快点'
-      }
+        subTitle: '下午来开会，快点，快点',
+      },
     ]);
     function onClickMore() {
       showSuccessMessage('点击了更多');
     }
     return {
       tempData,
-      onClickMore
+      onClickMore,
     };
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>

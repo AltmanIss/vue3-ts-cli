@@ -1,22 +1,47 @@
 <template>
-  <el-skeleton animated :loading="loading">
+  <el-skeleton
+    animated
+    :loading="loading"
+  >
     <template #template>
       <el-card>
-        <el-skeleton-item variant="h3" style="width: 50%" />
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
         <div class="margin-top">
           <el-skeleton-item variant="text" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
         </div>
       </el-card>
     </template>
     <template #default>
-      <el-card class="flex-sub chart-item-container" :body-style="{ padding: 0 }" shadow="never">
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
         <template #header>
-          <div class="text-bold">半年招生对比图（单位：人）</div>
+          <div class="text-bold">
+            半年招生对比图（单位：人）
+          </div>
         </template>
-        <div ref="studentChart" class="chart-item"></div>
+        <div
+          ref="studentChart"
+          class="chart-item"
+        >
+        </div>
       </el-card>
     </template>
   </el-skeleton>
@@ -24,7 +49,13 @@
 
 <script lang="ts">
 import useEcharts from '@/hooks/Echarts';
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from '@vue/runtime-core';
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 import { dispose, graphic } from 'echarts';
 
 export default defineComponent({
@@ -39,22 +70,22 @@ export default defineComponent({
           right: '5%',
           top: '5%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         yAxis: {
           type: 'category',
           data: ['一月', '二月', '三月', '四月', '五月', '六月'],
           boundaryGap: 0,
           axisTick: {
-            show: false
-          }
+            show: false,
+          },
         },
         xAxis: {
           type: 'value',
-          boundaryGap: 0
+          boundaryGap: 0,
         },
         series: [
           {
@@ -69,16 +100,16 @@ export default defineComponent({
               color: new graphic.LinearGradient(1, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: 'rgba(12, 124, 182)'
+                  color: 'rgba(12, 124, 182)',
                 },
                 {
                   offset: 1,
-                  color: 'rgba(244, 187, 236)'
-                }
-              ])
-            }
-          }
-        ]
+                  color: 'rgba(244, 187, 236)',
+                },
+              ]),
+            },
+          },
+        ],
       };
       setTimeout(() => {
         loading.value = false;
@@ -91,15 +122,12 @@ export default defineComponent({
       useEcharts(studentChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(studentChart.value as HTMLDivElement);
-    });
     return {
       loading,
       updateChart,
-      studentChart
+      studentChart,
     };
-  }
+  },
 });
 </script>
 

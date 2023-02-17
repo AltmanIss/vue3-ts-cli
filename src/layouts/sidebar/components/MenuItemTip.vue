@@ -1,5 +1,8 @@
 <template>
-  <el-badge :value="value" :is-dot="isDot" />
+  <el-badge
+    :value="value"
+    :is-dot="isDot"
+  />
 </template>
 
 <script lang="ts">
@@ -10,13 +13,13 @@ export default defineComponent({
   props: {
     isDot: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
       type: [String, Number],
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 });
 </script>
 

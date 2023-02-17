@@ -1,24 +1,50 @@
 <template>
   <div class="main-container">
-    <el-card :body-style="{ padding: '0' }">
+    <el-card :body-style="{padding: '0'}">
       <template #header>
         <span :underline="false">文章标题</span>
       </template>
-      <el-input v-model="title" class="title-input" placeholder="请输入文章标题" />
+      <el-input
+        v-model="title"
+        class="title-input"
+        placeholder="请输入文章标题"
+      />
     </el-card>
-    <el-card :body-style="{ padding: '0' }" class="margin-top-xs">
+    <el-card
+      :body-style="{padding: '0'}"
+      class="margin-top-xs"
+    >
       <template #header>
         <div class="flex">
           <span :underline="false">文章内容</span>
           <div class="flex-sub"></div>
-          <el-button type="primary" size="mini" @click="getHtmlContent">获取HTML</el-button>
-          <el-button type="warning" size="mini" @click="getJsonContent">获取JSON</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="getHtmlContent"
+          >获取HTML</el-button>
+          <el-button
+            type="warning"
+            size="small"
+            @click="getJsonContent"
+          >获取JSON</el-button>
         </div>
       </template>
-      <RichTextEditor ref="richTextEditor" :height="400" />
+      <RichTextEditor
+        ref="richTextEditor"
+        :height="400"
+      />
     </el-card>
-    <div v-if="htmlContent" class="margin-top padding priview-content" v-html="htmlContent"></div>
-    <div v-if="jsonContent" class="margin-top padding priview-content">
+    <div
+      v-if="htmlContent"
+      class="margin-top padding priview-content"
+      v-html="htmlContent"
+    >
+    </div>
+    <div
+      v-if="jsonContent"
+      class="margin-top padding priview-content"
+    >
       {{ jsonContent }}
     </div>
   </div>

@@ -10,25 +10,34 @@
         class="item-wrapper"
       >
         <DataItem :data-model="item">
-          <template v-if="index === 0" #extra="{ extra }">
+          <template
+            v-if="index === 0"
+            #extra="{ extra }"
+          >
             <div class="margin-top-lg">
               <div>
                 较昨日新增：{{ extra.data }}
                 <i class="el-icon-caret-top text-green"></i>
               </div>
-              <div class="margin-top-sm">
+              <div class=" margin-top-sm">
                 较上周新增：{{ extra.data1 }}
                 <i class="el-icon-caret-top text-blue"></i>
               </div>
             </div>
           </template>
-          <template v-else-if="index === 1" #extra="{ extra }">
-            <div class="margin-top" style="position: relative">
+          <template
+            v-else-if="index === 1"
+            #extra="{ extra }"
+          >
+            <div
+              class="margin-top"
+              style="position: relative"
+            >
               <div>
                 较昨日新增：{{ extra.data }}
                 <i class="el-icon-caret-top text-green"></i>
               </div>
-              <div class="margin-top-sm">
+              <div class=" margin-top-sm">
                 较上周新增：{{ extra.data1 }}
                 <i class="el-icon-caret-top text-blue"></i>
               </div>
@@ -37,7 +46,10 @@
               </div>
             </div>
           </template>
-          <template v-else-if="index === 2" #extra="{ extra }">
+          <template
+            v-else-if="index === 2"
+            #extra="{ extra }"
+          >
             <el-progress
               :text-inside="true"
               :stroke-width="15"
@@ -45,32 +57,54 @@
               status="exception"
             />
           </template>
-          <template v-else-if="index === 3" #extra>
+          <template
+            v-else-if="index === 3"
+            #extra
+          >
             <OrderChart ref="mOrderChart" />
           </template>
         </DataItem>
       </el-col>
     </el-row>
-    <el-row :gutter="5" class="margin-top-sm">
+    <el-row
+      :gutter="5"
+      class="margin-top-sm"
+    >
       <el-col :span="24">
         <FullYearSalesChart ref="fullYearSalesChart" />
       </el-col>
     </el-row>
-    <el-row :gutter="5" class="margin-top-sm">
-      <el-col :xs="24" :sm="24" :md="6">
-        <div class="flex flex-direction">
-          <SalesChart ref="salesChart" />
-          <StudentChart ref="studentChart" class="margin-top-xs" />
-        </div>
+    <el-row
+      :gutter="5"
+      class="margin-top-sm"
+    >
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+      >
+        <SalesChart ref="salesChart" />
       </el-col>
-      <el-col :xs="24" :sm="24" :md="12" class="map-margin-tb">
-        <SchoolChart ref="schoolChart" />
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+      >
+        <StudentChart ref="studentChart" />
       </el-col>
-      <el-col :xs="24" :sm="24" :md="6">
-        <div class="flex flex-direction">
-          <EnrollmentChannelsChart ref="enrollmentChannelsChart" />
-          <DepartmentChart ref="departmentChart" class="margin-top-xs" />
-        </div>
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+      >
+        <EnrollmentChannelsChart ref="enrollmentChannelsChart" />
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+      >
+        <DepartmentChart ref="departmentChart" />
       </el-col>
     </el-row>
   </div>
@@ -83,29 +117,33 @@ import SalesChart from './components/chart/SalesChart.vue';
 import StudentChart from './components/chart/StudentChart.vue';
 import EnrollmentChannelsChart from './components/chart/EnrollmentChannelsChart.vue';
 import DepartmentChart from './components/chart/DepartmentChart.vue';
-import SchoolChart from './components/chart/SchoolChart.vue';
 import FullYearSalesChart from './components/chart/FullYearSalesChart.vue';
-import { computed, defineComponent, onMounted, ref, watch } from '@vue/runtime-core';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 import { useLayoutStore } from '@/layouts/hooks';
 export default defineComponent({
   name: 'Home',
   components: {
     DataItem,
     OrderChart,
-    SchoolChart,
     SalesChart,
     StudentChart,
     EnrollmentChannelsChart,
     DepartmentChart,
-    FullYearSalesChart
+    FullYearSalesChart,
   },
   setup() {
     const layoutStore = useLayoutStore();
     const mOrderChart = ref<InstanceType<typeof OrderChart>>();
     const salesChart = ref<InstanceType<typeof SalesChart>>();
     const departmentChart = ref<InstanceType<typeof DepartmentChart>>();
-    const enrollmentChannelsChart = ref<InstanceType<typeof EnrollmentChannelsChart>>();
-    const schoolChart = ref<InstanceType<typeof SchoolChart>>();
+    const enrollmentChannelsChart =
+      ref<InstanceType<typeof EnrollmentChannelsChart>>();
     const studentChart = ref<InstanceType<typeof StudentChart>>();
     const fullYearSalesChart = ref<InstanceType<typeof FullYearSalesChart>>();
     const onResize = () => {
@@ -114,7 +152,6 @@ export default defineComponent({
         salesChart.value?.updateChart();
         departmentChart.value?.updateChart();
         enrollmentChannelsChart.value?.updateChart();
-        schoolChart.value?.updateChart();
         studentChart.value?.updateChart();
         fullYearSalesChart.value?.updateChart();
       }, 500);
@@ -131,7 +168,6 @@ export default defineComponent({
       salesChart,
       departmentChart,
       enrollmentChannelsChart,
-      schoolChart,
       studentChart,
       fullYearSalesChart,
       dataList: [
@@ -142,8 +178,8 @@ export default defineComponent({
           totalSum: '100万+',
           extra: {
             data: 1000,
-            data1: 2350
-          }
+            data1: 2350,
+          },
         },
         {
           title: '新增用户',
@@ -152,8 +188,8 @@ export default defineComponent({
           totalSum: '200万+',
           extra: {
             data: 700,
-            data1: 968
-          }
+            data1: 968,
+          },
         },
         {
           title: '当月销售额',
@@ -161,8 +197,8 @@ export default defineComponent({
           bottomTitle: '累计销售额',
           totalSum: '2000万+',
           extra: {
-            data: 80
-          }
+            data: 80,
+          },
         },
         {
           title: '当月订单量',
@@ -170,12 +206,12 @@ export default defineComponent({
           bottomTitle: '累计订单量',
           totalSum: '1万+',
           extra: {
-            data: 80
-          }
-        }
-      ]
+            data: 80,
+          },
+        },
+      ],
     };
-  }
+  },
 });
 </script>
 

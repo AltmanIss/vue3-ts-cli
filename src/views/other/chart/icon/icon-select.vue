@@ -11,7 +11,7 @@
 import { reactive, ref, watch } from 'vue';
 const icon = ref('search');
 const value = reactive({
-  name: 1
+  name: 1,
 });
 watch(
   () => value.name,
@@ -33,15 +33,15 @@ const data = [
         children: [
           {
             value: 9,
-            label: 'Level three 1-1-1'
+            label: 'Level three 1-1-1',
           },
           {
             value: 10,
-            label: 'Level three 1-1-2'
-          }
-        ]
-      }
-    ]
+            label: 'Level three 1-1-2',
+          },
+        ],
+      },
+    ],
   },
   {
     value: 2,
@@ -49,13 +49,13 @@ const data = [
     children: [
       {
         value: 5,
-        label: 'Level two 2-1'
+        label: 'Level two 2-1',
       },
       {
         value: 6,
-        label: 'Level two 2-2'
-      }
-    ]
+        label: 'Level two 2-2',
+      },
+    ],
   },
   {
     value: 3,
@@ -63,13 +63,13 @@ const data = [
     children: [
       {
         value: 7,
-        label: 'Level two 3-1'
+        label: 'Level two 3-1',
       },
       {
         value: 8,
-        label: 'Level two 3-2'
-      }
-    ]
-  }
+        label: 'Level two 3-2',
+      },
+    ],
+  },
 ];
 </script>

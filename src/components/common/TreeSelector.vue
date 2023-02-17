@@ -1,9 +1,14 @@
 <template>
-  <el-popover v-model:visible="visible" placement="bottom" :width="popWidth" trigger="click">
+  <el-popover
+    v-model:visible="visible"
+    placement="bottom"
+    :width="popWidth"
+  >
     <template #reference>
       <el-input
         ref="inputRef"
-        size="small"
+        @focus="onFocus"
+        @blur="onBlur"
         :placeholder="placeholder"
         v-model="selectValue"
         readonly
@@ -29,32 +34,41 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, PropType, ref, toRaw, unref, watch } from 'vue';
+import {
+  computed,
+  nextTick,
+  onMounted,
+  PropType,
+  ref,
+  toRaw,
+  unref,
+  watch,
+} from 'vue';
 const props = defineProps({
   value: {
     type: [String, Number],
-    default: ''
+    default: '',
   },
   data: {
     type: Array as PropType<Array<any>>,
-    default: () => []
+    default: () => [],
   },
   placeholder: {
     type: String,
-    default: '请选择'
+    default: '请选择',
   },
   dataFields: {
     type: Object,
     default: () => ({
       label: 'label',
       value: 'value',
-      children: 'children'
-    })
-  }
+      children: 'children',
+    }),
+  },
 });
-const innerData = ref<Array<TreeDataType>>([]);
 const emitter = defineEmits(['update:value']);
-const selectValue = ref('');
+const innerData = computed(() => transformData(props.data));
+const selectValue = computed(() => getLabelByValue(innerData.value));
 const visible = ref(false);
 const inputRef = ref();
 const popWidth = ref(300);
@@ -86,7 +100,7 @@ function transformData(data: Array<any>) {
     const element = data[index];
     const item: TreeDataType = {
       label: element[props.dataFields.label || 'label'],
-      value: element[props.dataFields.value || 'value']
+      value: element[props.dataFields.value || 'value'],
     };
     const tempChildren = element[props.dataFields.children || 'children'];
     if (tempChildren && tempChildren.length > 0) {
@@ -96,81 +110,21 @@ function transformData(data: Array<any>) {
   }
   return innerData;
 }
-watch(
-  () => props.value,
-  () => {
-    selectValue.value = getLabelByValue(innerData.value);
-  }
-);
 function onNodeClick(key: any, item: any) {
   visible.value = false;
   emitter('update:value', key.value);
 }
+function onFocus() {
+  visible.value = true;
+}
+function onBlur() {
+  visible.value = false;
+}
 onMounted(() => {
-  innerData.value = transformData(props.data);
-  selectValue.value = getLabelByValue(innerData.value);
   nextTick(() => {
     popWidth.value = unref(inputRef).$el.clientWidth;
   });
 });
-
-const data = [
-  {
-    label: 'Level one 1',
-    children: [
-      {
-        label: 'Level two 1-1',
-        children: [
-          {
-            label: 'Level three 1-1-1'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    label: 'Level one 2',
-    children: [
-      {
-        label: 'Level two 2-1',
-        children: [
-          {
-            label: 'Level three 2-1-1'
-          }
-        ]
-      },
-      {
-        label: 'Level two 2-2',
-        children: [
-          {
-            label: 'Level three 2-2-1'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    label: 'Level one 3',
-    children: [
-      {
-        label: 'Level two 3-1',
-        children: [
-          {
-            label: 'Level three 3-1-1'
-          }
-        ]
-      },
-      {
-        label: 'Level two 3-2',
-        children: [
-          {
-            label: 'Level three 3-2-1'
-          }
-        ]
-      }
-    ]
-  }
-];
 </script>
 <style lang="scss">
 .poper-wrapper {

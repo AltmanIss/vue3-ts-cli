@@ -1,9 +1,13 @@
 <template>
-  <div id="richTextEditor" :style="{ height: height + 'px' }"></div>
+  <div
+    id="richTextEditor"
+    :style="{'height': height + 'px'}"
+  >
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@vue/runtime-core';
+import { defineComponent, onMounted } from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 export default defineComponent({
@@ -11,8 +15,8 @@ export default defineComponent({
   props: {
     height: {
       type: [Number, String],
-      default: 'auto'
-    }
+      default: 'auto',
+    },
   },
   setup() {
     let quill: Quill | null = null;
@@ -36,25 +40,29 @@ export default defineComponent({
 
             ['link', 'image'],
 
-            ['clean'] // 清除格式
-          ]
+            ['clean'], // 清除格式
+          ],
         },
         placeholder: '请输入文章内容…',
-        theme: 'snow'
+        theme: 'snow',
       };
-      quill = new Quill(document.getElementById('richTextEditor') as Element, options);
+      quill = new Quill(
+        document.getElementById('richTextEditor') as Element,
+        options
+      );
     };
     onMounted(init);
     const getHtmlContent = () => {
-      return (document.getElementById('richTextEditor')?.firstChild as any).innerHTML;
+      return (document.getElementById('richTextEditor')?.firstChild as any)
+        .innerHTML;
     };
     const getJsonContent = () => {
       return JSON.stringify(quill?.getContents());
     };
     return {
       getHtmlContent,
-      getJsonContent
+      getJsonContent,
     };
-  }
+  },
 });
 </script>

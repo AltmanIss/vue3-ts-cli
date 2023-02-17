@@ -2,7 +2,10 @@
   <div class="main-container">
     <div class="box-wrapper">
       <div class="flex">
-        <el-card class="box-card personal-box" :body-style="{ padding: '10px' }">
+        <el-card
+          class="box-card personal-box"
+          :body-style="{ padding: '10px' }"
+        >
           <div class="info-wrapper">
             <div class="avatar-wrapper">
               <div
@@ -12,7 +15,10 @@
               >
                 <img :src="avatar" />
               </div>
-              <div class="camera-layer flex justify-center align-center" @click="uploadAvatar">
+              <div
+                class="camera-layer flex justify-center align-center"
+                @click="uploadAvatar"
+              >
                 <i class="el-icon-camera-solid text-white text-sl"></i>
               </div>
             </div>
@@ -40,41 +46,80 @@
               <div class="value">研发部</div>
             </div>
             <div>
-              <el-tag effect="dark" size="mini">技术控</el-tag>
-              <el-tag effect="dark" size="mini">爱学习</el-tag>
-              <el-tag effect="dark" size="mini">大嘴巴</el-tag>
-              <el-tag effect="dark" size="mini">宅男</el-tag>
-              <el-tag type="info" effect="dark" size="mini">嘚嘚没完</el-tag>
-              <el-tag type="info" effect="dark" size="mini">UP主</el-tag>
-              <el-tag type="info" effect="dark" size="mini">手机控</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >技术控</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >爱学习</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >大嘴巴</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >宅男</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >嘚嘚没完</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >UP主</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >手机控</el-tag>
             </div>
           </div>
         </el-card>
-        <el-card class="box-card wating-box flex-sub margin-left" :body-style="{ padding: '10px' }">
+        <el-card
+          class="box-card wating-box flex-sub margin-left"
+          :body-style="{ padding: '10px' }"
+        >
           <template #header>
             <div class="flex justify-between align-center">
               <span class="text-sm">待办事项</span>
             </div>
           </template>
-          <div v-for="(item, index) of watingJobs" :key="index" class="flex wating-item">
+          <div
+            v-for="(item, index) of watingJobs"
+            :key="index"
+            class="flex wating-item"
+          >
             <div class="flex-sub">
               {{ item.title }}
             </div>
             <div style="width: 40px">
-              <el-tag :type="item.status === 0 ? 'danger' : 'success'" size="mini">
-                {{ item.status === 0 ? '未完成' : '已完成' }}
+              <el-tag
+                :type="item.status === 0 ? 'danger' : 'success'"
+                size="small"
+              >
+                {{ item.status === 0 ? "未完成" : "已完成" }}
               </el-tag>
             </div>
           </div>
         </el-card>
       </div>
       <div class="margin-top">
-        <el-card class="box-card flex-sub" :body-style="{ padding: '10px' }">
+        <el-card
+          class="box-card flex-sub"
+          :body-style="{ padding: '10px' }"
+        >
           <template #header>
             <div class="flex justify-between align-center">
               <span class="text-sm">消息中心</span>
-              <el-button style="padding: 3px 0" type="text"
-                >查看更多
+              <el-button
+                style="padding: 3px 0"
+                type="text"
+              >查看更多
                 <i class="el-icon-d-arrow-right"></i>
               </el-button>
             </div>
@@ -88,7 +133,7 @@
               class="notify"
               :class="{
                 'bg-red': item.status === 0,
-                'bg-green': item.status === 1
+                'bg-green': item.status === 1,
               }"
             ></div>
             <div class="flex-sub margin-left">
@@ -133,81 +178,81 @@ export default defineComponent({
           title: '【总经理通知】',
           content:
             '明天【下午】有【不拘一格】课程直播，公司尝试全新直播模式，其中会直播各个部门员工的工作常态，需要全体家人的配合与支持。具体要求如下：1.、办公桌上只允许放：电脑、水杯、笔记本、笔、电话2.、座椅后背不允许挂衣服，全部放到厨子里3、直播期间，全员上身着工装外套4、直播期间请勿随意走动，文明用语，若进入直播镜头请微笑示意课程直播不仅是介绍课程，更重要的是向客户展示优行教育！[嘿哈][嘿哈][嘿哈]',
-          status: 0 // 0未读 1已读
+          status: 0, // 0未读 1已读
         },
         {
           title: '重要通知：今天要加班，一堆bug等着修改，请全体家人们注意',
           content:
             '为了配合市场家人们努力开单，从今天开始，技术部及教研老师们要努力加班，全力配合市场的家人们多多开单。谢谢大家的支持与配合。',
-          status: 0 // 0未读 1已读
+          status: 0, // 0未读 1已读
         },
         {
           title: '重要通知：今天要加班，一堆bug等着修改，请全体家人们注意',
           content:
             '为了配合市场家人们努力开单，从今天开始，技术部及教研老师们要努力加班，全力配合市场的家人们多多开单。谢谢大家的支持与配合。',
-          status: 1 // 0未读 1已读
+          status: 1, // 0未读 1已读
         },
         {
           title: '重要通知：今天要加班，一堆bug等着修改，请全体家人们注意',
           content:
             '为了配合市场家人们努力开单，从今天开始，技术部及教研老师们要努力加班，全力配合市场的家人们多多开单。谢谢大家的支持与配合。',
-          status: 1 // 0未读 1已读
+          status: 1, // 0未读 1已读
         },
         {
           title: '重要通知：今天要加班，一堆bug等着修改，请全体家人们注意',
           content:
             '为了配合市场家人们努力开单，从今天开始，技术部及教研老师们要努力加班，全力配合市场的家人们多多开单。谢谢大家的支持与配合。',
-          status: 1 // 0未读 1已读
-        }
+          status: 1, // 0未读 1已读
+        },
       ],
       watingJobs: [
         {
           title: '和朋友同事一起玩王者，吃鸡',
-          status: 0 // 0未完成，1已完成
+          status: 0, // 0未完成，1已完成
         },
         {
           title: '下班写今日总结',
-          status: 1 // 0未完成，1已完成
+          status: 1, // 0未完成，1已完成
         },
         {
           title: '中午打卡，吃饭，下去买一瓶快乐水',
-          status: 0 // 0未完成，1已完成
+          status: 0, // 0未完成，1已完成
         },
         {
           title: '给项目经理演示项目成果，汇报项目进度，查看同事新提交的bug',
-          status: 1 // 0未完成，1已完成
+          status: 1, // 0未完成，1已完成
         },
         {
           title: '上班打卡',
-          status: 0 // 0未完成，1已完成
+          status: 0, // 0未完成，1已完成
         },
         {
           title: '和朋友同事一起玩王者，吃鸡',
-          status: 0 // 0未完成，1已完成
+          status: 0, // 0未完成，1已完成
         },
         {
           title: '下班写今日总结',
-          status: 1 // 0未完成，1已完成
+          status: 1, // 0未完成，1已完成
         },
         {
           title: '中午打卡，吃饭，下去买一瓶快乐水',
-          status: 0 // 0未完成，1已完成
+          status: 0, // 0未完成，1已完成
         },
         {
           title: '给项目经理演示项目成果，汇报项目进度，查看同事新提交的bug',
-          status: 1 // 0未完成，1已完成
+          status: 1, // 0未完成，1已完成
         },
         {
           title: '上班打卡',
-          status: 0 // 0未完成，1已完成
-        }
+          status: 0, // 0未完成，1已完成
+        },
       ],
       avatar: userStore.avatar,
       nickName: userStore.nickName,
       avatarTouchStart,
-      uploadAvatar
+      uploadAvatar,
     };
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>

@@ -1,29 +1,55 @@
 <template>
-  <el-skeleton :loading="loading" animated>
+  <el-skeleton
+    :loading="loading"
+    animated
+  >
     <template #template>
       <el-card>
-        <el-skeleton-item variant="h3" style="width: 50%" />
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%;"
+        />
         <div class="margin-top">
           <el-skeleton-item variant="text" />
-          <el-skeleton-item variant="text" style="width: 50%" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" style="width: 50%" class="margin-top" />
+          <el-skeleton-item
+            variant="text"
+            style="width: 50%;"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            style="width: 50%;"
+            class="margin-top"
+          />
         </div>
       </el-card>
     </template>
     <template #default>
-      <el-card :body-style="{ padding: '10px' }" shadow="never">
+      <el-card
+        :body-style="{padding: '10px'}"
+        shadow="never"
+      >
         <template #header>
           <div class="flex align-center justify-between">
             <span class="text-bold text-sm">{{ dataModel.title }}</span>
           </div>
         </template>
-        <div style="height: 130px" class="flex flex-direction justify-between">
+        <div
+          style="height: 130px"
+          class="flex flex-direction justify-between"
+        >
           <div class="flex flex-direction justify-center">
             <span class="text-xxl">{{ dataModel.data }}</span>
           </div>
           <div class="flex-sub flex flex-direction justify-center">
-            <slot name="extra" :extra="dataModel.extra"></slot>
+            <slot
+              name="extra"
+              :extra="dataModel.extra"
+            ></slot>
           </div>
           <div class="divide"></div>
           <div class="flex justify-between align-center">
@@ -37,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/runtime-core';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'DataItem',
@@ -46,8 +72,8 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
   setup() {
     const loading = ref(true);
@@ -55,9 +81,9 @@ export default defineComponent({
       loading.value = false;
     }, 1000);
     return {
-      loading
+      loading,
     };
-  }
+  },
 });
 </script>
 

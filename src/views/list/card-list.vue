@@ -11,7 +11,10 @@
         :xl="8"
         class="col-item"
       >
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
+        <el-card
+          :body-style="{ padding: '0px' }"
+          shadow="hover"
+        >
           <div class="text-center">
             <el-image
               style="width: 100%; height: 250px"
@@ -35,7 +38,11 @@
         </el-card>
       </el-col>
     </el-row>
-    <TableFooter ref="tableFooter" @refresh="doRefresh" @pageChanged="doRefresh" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
@@ -53,7 +60,7 @@ const tableFooter = ref<TableFooter>();
 function doRefresh() {
   post({
     url: getCardList,
-    data: () => tableFooter.value?.withPageInfoData()
+    data: () => tableFooter.value?.withPageInfoData(),
   })
     .then(handleSuccess)
     .then((res: any) => {

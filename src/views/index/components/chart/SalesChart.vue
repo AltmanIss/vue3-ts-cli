@@ -1,22 +1,47 @@
 <template>
-  <el-skeleton animated :loading="loading">
+  <el-skeleton
+    animated
+    :loading="loading"
+  >
     <template #template>
       <el-card>
-        <el-skeleton-item variant="h3" style="width: 50%" />
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
         <div class="margin-top">
           <el-skeleton-item variant="text" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
         </div>
       </el-card>
     </template>
     <template #default>
-      <el-card class="flex-sub chart-item-container" :body-style="{ padding: 0 }" shadow="never">
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
         <template #header>
-          <div class="text-bold">一周销售额（单位：万）</div>
+          <div class="text-bold">
+            一周销售额（单位：万）
+          </div>
         </template>
-        <div ref="salesChart" class="chart-item"></div>
+        <div
+          ref="salesChart"
+          class="chart-item"
+        >
+        </div>
       </el-card>
     </template>
   </el-skeleton>
@@ -25,7 +50,13 @@
 <script lang="ts">
 import { dispose, graphic } from 'echarts';
 import useEcharts from '@/hooks/Echarts';
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 export default defineComponent({
   name: 'SalesChart',
   setup() {
@@ -38,21 +69,21 @@ export default defineComponent({
           right: '5%',
           top: '5%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         xAxis: {
           type: 'category',
           data: ['周一', '周二', '周三', '周四', '周五', '周六', '周天'],
           boundaryGap: false,
-          splitLine: { show: false }
+          splitLine: { show: false },
         },
         yAxis: {
           type: 'value',
           boundaryGap: false,
-          splitLine: { show: false }
+          splitLine: { show: false },
         },
         series: [
           {
@@ -61,23 +92,23 @@ export default defineComponent({
             smooth: true,
             showSymbol: false,
             lineStyle: {
-              width: 0
+              width: 0,
             },
             areaStyle: {
               opacity: 0.8,
               color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: 'rgba(55, 162, 255)'
+                  color: 'rgba(55, 162, 255)',
                 },
                 {
                   offset: 1,
-                  color: 'rgba(116, 21, 219)'
-                }
-              ])
-            }
-          }
-        ]
+                  color: 'rgba(116, 21, 219)',
+                },
+              ]),
+            },
+          },
+        ],
       };
       setTimeout(() => {
         loading.value = false;
@@ -90,15 +121,12 @@ export default defineComponent({
       useEcharts(salesChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(salesChart.value as HTMLDivElement);
-    });
     return {
       loading,
       salesChart,
-      updateChart
+      updateChart,
     };
-  }
+  },
 });
 </script>
 

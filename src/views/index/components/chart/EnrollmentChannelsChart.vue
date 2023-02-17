@@ -1,22 +1,47 @@
 <template>
-  <el-skeleton animated :loading="loading">
+  <el-skeleton
+    animated
+    :loading="loading"
+  >
     <template #template>
       <el-card>
-        <el-skeleton-item variant="h3" style="width: 50%" />
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
         <div class="margin-top">
           <el-skeleton-item variant="text" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
-          <el-skeleton-item variant="text" class="margin-top" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
         </div>
       </el-card>
     </template>
     <template #default>
-      <el-card class="flex-sub chart-item-container" :body-style="{ padding: 0 }" shadow="never">
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
         <template #header>
-          <div class="text-bold">招生渠道分析图</div>
+          <div class="text-bold">
+            招生渠道分析图
+          </div>
         </template>
-        <div ref="channelsChart" class="chart-item"></div>
+        <div
+          ref="channelsChart"
+          class="chart-item"
+        >
+        </div>
       </el-card>
     </template>
   </el-skeleton>
@@ -24,7 +49,13 @@
 
 <script lang="ts">
 import { useEcharts } from '@/hooks';
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from 'vue';
 import { dispose } from 'echarts';
 export default defineComponent({
   name: 'EnrollmentChannelsChart',
@@ -38,10 +69,10 @@ export default defineComponent({
           right: '5%',
           top: '5%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         series: [
           {
@@ -52,30 +83,30 @@ export default defineComponent({
             itemStyle: {
               borderRadius: 10,
               borderColor: '#fff',
-              borderWidth: 2
+              borderWidth: 2,
             },
             emphasis: {
               label: {
                 show: true,
                 fontSize: '16',
-                fontWeight: 'bold'
-              }
+                fontWeight: 'bold',
+              },
             },
             labelLine: {
               show: true,
               length: 5,
               length2: 5,
-              smooth: true
+              smooth: true,
             },
             data: [
               { value: 1969, name: '线上' },
               { value: 743, name: '互推' },
               { value: 1594, name: '电话' },
               { value: 1347, name: '地推' },
-              { value: 635, name: '直播' }
-            ]
-          }
-        ]
+              { value: 635, name: '直播' },
+            ],
+          },
+        ],
       };
       setTimeout(() => {
         loading.value = false;
@@ -88,15 +119,12 @@ export default defineComponent({
       useEcharts(channelsChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(channelsChart.value as HTMLDivElement);
-    });
     return {
       loading,
       channelsChart,
-      updateChart
+      updateChart,
     };
-  }
+  },
 });
 </script>
 

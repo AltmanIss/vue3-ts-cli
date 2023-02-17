@@ -1,4 +1,5 @@
 import { App } from 'vue';
+import FormRender from './common/FormRender';
 
 function getComponentName(key: string) {
   if (!key) {
@@ -15,8 +16,12 @@ function getComponentName(key: string) {
 
 export function registerComponents(app: App): void {
   const components = require.context('./', true, /\.vue$/);
-  components.keys().forEach((it) => {
+  components.keys().forEach((it: string) => {
     const component = components(it);
-    app.component(component.default.name || getComponentName(it), component.default);
+    app.component(
+      component.default.name || getComponentName(it),
+      component.default
+    );
   });
+  app.component('FormRender', FormRender);
 }

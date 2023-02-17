@@ -1,9 +1,7 @@
 import packageInfo from '../../package.json';
 
 export const primaryColors = [
-  '#1890ff',
   '#409eff',
-  '#3e77e4',
   '#13C2C2',
   '#F5222D',
   '#722ED1',
@@ -20,10 +18,10 @@ export const primaryColors = [
   '#76becc',
   '#1b315e',
   '#b4532a',
-  '#008792'
+  '#008792',
 ];
 
-const projectName = packageInfo.name;
+const projectName = 'Admin Work X';
 const version = packageInfo.version;
 
 const defaultSetting = JSON.parse(localStorage.getItem('sys_setting') || '{}');
@@ -32,9 +30,9 @@ export default Object.assign(
   {
     projectName,
     version,
-    primaryColor: '#1890ff',
-    layoutMode: 'ltr',
-    theme: 'light'
+    primaryColor: '#409eff',
+    layoutMode: 'ttb',
+    theme: 'light',
   },
   defaultSetting
 ) as Setting;

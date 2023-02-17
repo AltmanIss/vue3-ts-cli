@@ -1,36 +1,75 @@
 <template>
   <div>
-    <el-card :body-style="{ padding: 0 }">
-      <el-row v-for="item of dataList" :key="item.id" class="item-wrapper">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+    <el-card :body-style="{padding: 0}">
+      <el-row
+        v-for="item of dataList"
+        :key="item.id"
+        class="item-wrapper"
+      >
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+        >
           <div class="header-wrapper">
             <div class="avatar-wrapper">
-              <img class="avatar" :src="item.avatar" />
-              <img class="vip" :src="require('@/assets/img_vip_icon.png')" />
+              <img
+                class="avatar"
+                :src="item.avatar"
+              />
+              <img
+                class="vip"
+                :src="require('@/assets/img_vip_icon.png')"
+              />
             </div>
             <div class="nick-wrapper">
               <span class="nick-name">{{ item.nickName }}</span>
-              <el-rate v-model="item.rate" disabled text-color="#ff9900" />
+              <el-rate
+                v-model="item.rate"
+                disabled
+                text-color="#ff9900"
+              />
               <div class="content">
-                {{ item.content }}
+                {{item.content}}
               </div>
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+        >
           <div class="content-wrapper">
             <div>时间</div>
             <div>{{ item.time }}</div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div style="height: 100%; width: 100%" class="flex justify-center flex-direction">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+        >
+          <div
+            style="height: 100%;width: 100%"
+            class="flex justify-center flex-direction"
+          >
             <el-progress :percentage="item.progress"></el-progress>
           </div>
         </el-col>
       </el-row>
     </el-card>
-    <TableFooter ref="tableFooter" @refresh="doRefresh" @pageChanged="doRefresh" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
@@ -47,7 +86,7 @@ const tableFooter = ref<TableFooter>();
 function doRefresh() {
   post({
     url: getCommentList,
-    data: tableFooter.value?.withPageInfoData()
+    data: tableFooter.value?.withPageInfoData(),
   })
     .then(handleSuccess)
     .then((res: any) => {
@@ -98,7 +137,7 @@ onMounted(doRefresh);
     justify-content: space-around;
   }
   &::after {
-    content: '';
+    content: "";
     display: block;
     height: 1px;
     width: 100%;

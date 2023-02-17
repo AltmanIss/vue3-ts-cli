@@ -1,49 +1,115 @@
 <template>
   <div>
-    <el-card :body-style="{ padding: '10px' }">
+    <el-card :body-style="{padding: '10px'}">
       <template #header>
         <div>拆线图</div>
       </template>
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options1" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options2" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options3" />
         </el-col>
       </el-row>
     </el-card>
-    <el-card :body-style="{ padding: '10px' }" class="margin-tb">
+    <el-card
+      :body-style="{padding: '10px'}"
+      class="margin-tb"
+    >
       <template #header>
         <div>柱状图</div>
       </template>
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options4" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options5" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options6" />
         </el-col>
       </el-row>
     </el-card>
-    <el-card :body-style="{ padding: '10px' }">
+    <el-card :body-style="{padding: '10px'}">
       <template #header>
         <div>饼状图</div>
       </template>
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options7" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options8" />
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" style="height: 180px">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="8"
+          :xl="8"
+          style="height: 180px"
+        >
           <Chart :options="options9" />
         </el-col>
       </el-row>
@@ -58,112 +124,112 @@ import Chart from './components/Chart.vue';
 export default defineComponent({
   name: 'Echarts',
   components: {
-    Chart
+    Chart,
   },
   setup() {
     const options1 = {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       grid: {
         x: '10%',
         y: '5%',
         x2: '5%',
-        y2: '15%'
+        y2: '15%',
       },
       series: [
         {
           data: [150, 230, 224, 218, 135, 147, 260],
-          type: 'line'
-        }
-      ]
+          type: 'line',
+        },
+      ],
     };
     const options2 = {
       grid: {
         x: '10%',
         y: '5%',
         x2: '5%',
-        y2: '15%'
+        y2: '15%',
       },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       series: [
         {
           data: [820, 932, 901, 934, 1290, 1330, 1320],
           type: 'line',
-          areaStyle: {}
-        }
-      ]
+          areaStyle: {},
+        },
+      ],
     };
     const options3 = {
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
       },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       series: [
         {
           name: '邮件营销',
           type: 'line',
           stack: '总量',
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: [120, 132, 101, 134, 90, 230, 210],
         },
         {
           name: '联盟广告',
           type: 'line',
           stack: '总量',
-          data: [220, 182, 191, 234, 290, 330, 310]
+          data: [220, 182, 191, 234, 290, 330, 310],
         },
         {
           name: '视频广告',
           type: 'line',
           stack: '总量',
-          data: [150, 232, 201, 154, 190, 330, 410]
+          data: [150, 232, 201, 154, 190, 330, 410],
         },
         {
           name: '直接访问',
           type: 'line',
           stack: '总量',
-          data: [320, 332, 301, 334, 390, 330, 320]
+          data: [320, 332, 301, 334, 390, 330, 320],
         },
         {
           name: '搜索引擎',
           type: 'line',
           stack: '总量',
-          data: [820, 932, 901, 934, 1290, 1330, 1320]
-        }
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options4 = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       series: [
         {
@@ -171,24 +237,24 @@ export default defineComponent({
           type: 'bar',
           showBackground: true,
           backgroundStyle: {
-            color: 'rgba(180, 180, 180, 0.2)'
-          }
-        }
+            color: 'rgba(180, 180, 180, 0.2)',
+          },
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options5 = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       series: [
         {
@@ -197,58 +263,58 @@ export default defineComponent({
             {
               value: 200,
               itemStyle: {
-                color: '#a90000'
-              }
+                color: '#a90000',
+              },
             },
             150,
             80,
             70,
             110,
-            130
+            130,
           ],
-          type: 'bar'
-        }
+          type: 'bar',
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options6 = {
       xAxis: {
         type: 'value',
-        boundaryGap: [0, 0.01]
+        boundaryGap: [0, 0.01],
       },
       yAxis: {
         type: 'category',
-        data: ['巴西', '印尼', '美国', '印度', '中国']
+        data: ['巴西', '印尼', '美国', '印度', '中国'],
       },
       series: [
         {
           name: '2011年',
           type: 'bar',
-          data: [18203, 23489, 29034, 104970, 131744]
+          data: [18203, 23489, 29034, 104970, 131744],
         },
         {
           name: '2012年',
           type: 'bar',
-          data: [19325, 23438, 31000, 121594, 134141]
-        }
+          data: [19325, 23438, 31000, 121594, 134141],
+        },
       ],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow'
-        }
+          type: 'shadow',
+        },
       },
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options7 = {
       series: [
@@ -261,23 +327,23 @@ export default defineComponent({
             { value: 735, name: '直接访问' },
             { value: 580, name: '邮件营销' },
             { value: 484, name: '联盟广告' },
-            { value: 300, name: '视频广告' }
+            { value: 300, name: '视频广告' },
           ],
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options8 = {
       series: [
@@ -289,37 +355,37 @@ export default defineComponent({
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
-            borderWidth: 2
+            borderWidth: 2,
           },
           label: {
             show: false,
-            position: 'center'
+            position: 'center',
           },
           emphasis: {
             label: {
               show: true,
               fontSize: '20',
-              fontWeight: 'bold'
-            }
+              fontWeight: 'bold',
+            },
           },
           labelLine: {
-            show: false
+            show: false,
           },
           data: [
             { value: 1048, name: '搜索引擎' },
             { value: 735, name: '直接访问' },
             { value: 580, name: '邮件营销' },
             { value: 484, name: '联盟广告' },
-            { value: 300, name: '视频广告' }
-          ]
-        }
+            { value: 300, name: '视频广告' },
+          ],
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     const options9 = {
       series: [
@@ -330,7 +396,7 @@ export default defineComponent({
           center: ['50%', '50%'],
           roseType: 'area',
           itemStyle: {
-            borderRadius: 8
+            borderRadius: 8,
           },
           data: [
             { value: 40, name: 'rose 1' },
@@ -340,16 +406,16 @@ export default defineComponent({
             { value: 28, name: 'rose 5' },
             { value: 26, name: 'rose 6' },
             { value: 22, name: 'rose 7' },
-            { value: 18, name: 'rose 8' }
-          ]
-        }
+            { value: 18, name: 'rose 8' },
+          ],
+        },
       ],
       grid: {
         x: '15%',
         y: '5%',
         x2: '1%',
-        y2: '15%'
-      }
+        y2: '15%',
+      },
     };
     return {
       options1,
@@ -360,8 +426,8 @@ export default defineComponent({
       options6,
       options7,
       options8,
-      options9
+      options9,
     };
-  }
+  },
 });
 </script>

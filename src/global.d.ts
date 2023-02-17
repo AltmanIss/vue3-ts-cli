@@ -3,7 +3,7 @@ declare interface RoleModel {
   name: string;
   roleCode: string;
   description: string;
-  [propName: string]: any;
+  [propName: string]: any
 }
 
 declare interface MenuModel {
@@ -17,7 +17,7 @@ declare interface MenuModel {
   cacheable?: boolean;
   hidden?: boolean;
   icon?: string;
-  affix?: boolean;
+  affix?: boolean
 }
 
 declare interface TablePropsType {

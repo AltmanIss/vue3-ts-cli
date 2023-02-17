@@ -1,15 +1,19 @@
 <template>
-  <el-menu-item :index="generatorPath()" @click="handleClick">
-    <!-- <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" /> -->
+  <el-menu-item
+    :index="generatorPath()"
+    @click="handleClick"
+  >
     <el-icon>
-      <component :is="showRoute.meta ? showRoute.meta.icon || MenuIcon : MenuIcon" />
+      <component :is="
+          showRoute.meta ? showRoute.meta.icon || OperationIcon : OperationIcon
+        " />
     </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
-      <MenuItemTip
+      <!-- <MenuItemTip
         :value="showRoute.meta ? showRoute.meta.badge || '' : ''"
         :is-dot="showRoute.meta ? showRoute.meta.badge === 'dot' : false"
-      />
+      /> -->
     </template>
   </el-menu-item>
 </template>
@@ -19,28 +23,29 @@ import { isExternal } from '../../utils';
 import path from 'path';
 import { defineComponent } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { Menu as MenuIcon } from '@element-plus/icons';
+import { Operation as OperationIcon } from '@element-plus/icons';
 export default defineComponent({
   name: 'MenuItem',
   props: {
     fullPath: {
       type: String,
-      default: ''
+      default: '',
     },
     item: {
       type: Object,
       default: () => {
         return {};
-      }
+      },
     },
     showRoute: {
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
-  setup(props) {
+  emits: ['top-item-click'],
+  setup(props, { emit }) {
     const router = useRouter();
     const route = useRoute();
     function generatorPath() {
@@ -53,21 +58,27 @@ export default defineComponent({
       return path.resolve(props.fullPath, props.showRoute.path);
     }
     function handleClick() {
+      if (props.showRoute.isTopItem) {
+        emit('top-item-click', props.showRoute);
+        return;
+      }
       if (isExternal(props.showRoute.path)) {
         window.open(props.showRoute.path);
       } else if (isExternal(props.fullPath)) {
         window.open(props.fullPath);
-      } else if (route.path !== path.resolve(props.fullPath, props.showRoute.path)) {
+      } else if (
+        route.path !== path.resolve(props.fullPath, props.showRoute.path)
+      ) {
         router.push({
-          path: path.resolve(props.fullPath, props.showRoute.path)
+          path: path.resolve(props.fullPath, props.showRoute.path),
         });
       }
     }
     return {
       generatorPath,
       handleClick,
-      MenuIcon
+      OperationIcon,
     };
-  }
+  },
 });
 </script>

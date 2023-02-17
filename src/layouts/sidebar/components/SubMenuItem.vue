@@ -1,5 +1,8 @@
 <template>
-  <el-sub-menu :index="generatorPath(item.path)" popper-append-to-body>
+  <el-sub-menu
+    :index="generatorPath(item.path)"
+    popper-append-to-body
+  >
     <template #title>
       <el-icon>
         <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
@@ -15,21 +18,21 @@ import { isExternal } from '../../utils';
 import path from 'path';
 import store from '../../store';
 import { defineComponent } from 'vue';
-import { Menu as MenuIcon } from '@element-plus/icons';
+import { Operation as MenuIcon } from '@element-plus/icons';
 export default defineComponent({
   name: 'SubMenuItem',
   components: { MenuIcon },
   props: {
     fullPath: {
       type: String,
-      default: ''
+      default: '',
     },
     item: {
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
   setup(props) {
     function generatorPath(childPath: string) {
@@ -44,8 +47,8 @@ export default defineComponent({
     return {
       state: store.state,
       generatorPath,
-      MenuIcon
+      MenuIcon,
     };
-  }
+  },
 });
 </script>
